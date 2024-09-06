@@ -12,8 +12,10 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>ZotterMeals</Text>
-      <Text style={styles.subtitle}>Simple Calorie Tracking for Anteaters</Text>
+      <View style={styles.text}>
+        <Text style={styles.title}>ZotterMeals</Text>
+        <Text style={styles.subtitle}>Simple Calorie Tracking for Anteaters</Text>
+      </View>
       <Image style={styles.logo} source={require('../../assets/images/icon.png')}></Image>
       <View style={styles.buttons}>
         <TouchableOpacity style={styles.button} onPress={something}>
@@ -23,7 +25,6 @@ export default function HomeScreen() {
           <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
       </View>
-      <StatusBar style="auto" />
     </View>
   );
 }
@@ -38,6 +39,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
 
+  text: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 10,
+    width: 350
+  },
+
   title: {
     color: 'white',
     fontSize: 50,
@@ -45,7 +54,7 @@ const styles = StyleSheet.create({
 
   subtitle: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 25,
     textAlign: 'center',
   },
 
@@ -63,7 +72,7 @@ const styles = StyleSheet.create({
 
   button: {
     backgroundColor: "#A81612",
-    borderRadius: 25,
+    borderRadius: 30,
     width: 250,
     height: 60,
     justifyContent: "center",
@@ -78,5 +87,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     textAlign: 'center',
+    fontSize: 20,
   }, 
 });

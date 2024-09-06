@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         textAlign: 'center',
-        height: 100,
+        height: 90,
         width: '100%',
         backgroundColor: '#A81612',
         justifyContent: 'flex-end',

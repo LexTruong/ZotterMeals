@@ -28,22 +28,19 @@ export default function meals() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
-        // textAlign: 'center',
-        // flexDirection: 'column',
+        backgroundColor: 'white'
     },
 
     image: {
         width: '100%',
-        height: 150,
+        height: 180,
         justifyContent: 'flex-end'
     },
 
     title: {
-        marginBottom: 20,
+        marginBottom: 30,
         textAlign: 'center',
-        fontSize: 40,
+        fontSize: 50,
         color: 'white',
         fontWeight: 'bold',
     },

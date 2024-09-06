@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginVertical: 10,
         shadowOpacity: .5,
-        shadowRadius: 10,
+        shadowRadius: 5,
         shadowOffset: {
             width: 0,
             height: 5
@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
 
     imageContainer: {
         borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
+        borderTopRightRadius: 20,
+        overflow: 'hidden'
     },
 
     image: {
