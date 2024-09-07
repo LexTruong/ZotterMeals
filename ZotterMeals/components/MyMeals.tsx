@@ -21,6 +21,16 @@ export default function MyMeals() {
             calories: 300,
             protein: 4,
         },
+        {
+            name: "Apple",
+            calories: 10,
+            protein: 1,
+        },
+        {
+            name: "Shake",
+            calories: 200,
+            protein: 1,
+        },
     ]
 
     return (
@@ -36,10 +46,10 @@ export default function MyMeals() {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
+        flex: 1
     },
 
     list: {
-        backgroundColor: 'white',
-        paddingBottom: '100%'
+        backgroundColor: 'white'
     }
 })

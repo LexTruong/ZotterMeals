@@ -1,13 +1,16 @@
-import { ImageBackground, StyleSheet, Platform, TouchableOpacity, View, Button, Text, Image, FlatList } from 'react-native';
+import { ImageBackground, StyleSheet, Platform, TouchableOpacity, View, Button, Text, Image, FlatList, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Header from '@/components/Header';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import MyMeals from '@/components/MyMeals'
+import {useState} from 'react';
+import TotalProgressModal from '@/components/TotalProgressModal';
 
 export default function progress() {
     const calorieGoal = '/2000 Calories';
     const proteinGoal = '/150g Protein'
+    const [modalVisible, setModalVisible] = useState(false)
 
     return (
         <View style={styles.container}>
@@ -17,7 +20,7 @@ export default function progress() {
                 <CircularProgress
                     value={1500}
                     radius={100}
-                    duration={5000}
+                    duration={3500}
                     progressValueColor={'black'}
                     maxValue={2000}
                     title={''}
@@ -29,9 +32,9 @@ export default function progress() {
                 />
 
                 <CircularProgress
-                    value={112}
+                    value={120}
                     radius={100}
-                    duration={5000}
+                    duration={3500}
                     progressValueColor={'black'}
                     maxValue={150}
                     title={''}
@@ -46,9 +49,14 @@ export default function progress() {
             <View style={styles.titleIcons}>
                 <Text style={styles.myMeals}>My Meals</Text>
                 <View style={styles.icons}>
-                    <Ionicons style={styles.icons} name="add-circle-outline"></Ionicons>
-                    <Ionicons style={styles.icons} name="podium-outline"></Ionicons>
-                    <Ionicons style={styles.icons} name="calendar-clear-outline"></Ionicons>
+                    <Ionicons style={[styles.icon, styles.add]} name="add-circle-outline"></Ionicons>
+
+                    <TotalProgressModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+
+                    <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                        <Ionicons style={styles.icon} name="podium-outline"></Ionicons>
+                    </Pressable>
+                    <Ionicons style={styles.icon} name="calendar-clear-outline"></Ionicons>
                 </View>
             </View>
 
@@ -59,7 +67,8 @@ export default function progress() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        flex: 1,
     },
 
     myMeals: {
@@ -81,10 +90,17 @@ const styles = StyleSheet.create({
 
     icons: {
         flexDirection: 'row',
-        marginLeft: 'auto',
         justifyContent: 'flex-end',
         gap: 10,
-        marginRight: 8,
-        fontSize: 28,
+        marginRight: 15,
+        marginLeft: 'auto'
     },
+
+    icon: {
+        fontSize: 28
+    },
+
+    add: {
+        marginRight: -10
+    }
 })

@@ -16,7 +16,7 @@ export default function HomeScreen() {
         <Text style={styles.title}>ZotterMeals</Text>
         <Text style={styles.subtitle}>Simple Calorie Tracking for Anteaters</Text>
       </View>
-      <Image style={styles.logo} source={require('../../assets/images/icon.png')}></Image>
+      <Image style={styles.logo} source={require('../../assets/images/eat.png')}></Image>
       <View style={styles.buttons}>
         <TouchableOpacity style={styles.button} onPress={something}>
           <Text style={styles.buttonText}>Login</Text>
@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     width: 200,
     height: 200,
-    borderRadius: 100,
+    overflow: 'visible'
+    // borderRadius: 100,
   },
   
   buttons: {

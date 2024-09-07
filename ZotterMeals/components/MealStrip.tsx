@@ -1,5 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View , Pressable} from 'react-native'
+import MealInfoModal from '@/components/MealInfoModal';
+import {useState} from 'react';
 
 interface MealCardInfo {
     name: string,
@@ -8,6 +10,8 @@ interface MealCardInfo {
 }
 
 export default function MealStrip({info}: {info: MealCardInfo}) {
+    const [modalVisible, setModalVisible] = useState(false)
+
     return (
         <View style={styles.container}>
             <View style={styles.text}>
@@ -17,7 +21,11 @@ export default function MealStrip({info}: {info: MealCardInfo}) {
                     <Text>{info.protein}g Protein</Text>
                 </View>
             </View>
-            <Ionicons style={styles.iconAlert} name="information-circle-outline"></Ionicons>
+
+            <MealInfoModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+            <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                <Ionicons style={styles.iconAlert} name="information-circle-outline"></Ionicons>
+            </Pressable>
         </View>
     )
 }
