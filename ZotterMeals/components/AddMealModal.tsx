@@ -8,6 +8,7 @@ interface Props {
 }
 
 export default function AddMealModal({modalVisible, setModalVisible}: Props) {
+    const [name, setName] = useState('')
     const [calories, setCalories] = useState('');
     const [caloriesFat, setCaloriesFat] = useState('')
     const [cholesterol, setCholestorol] = useState('')
@@ -26,7 +27,7 @@ export default function AddMealModal({modalVisible, setModalVisible}: Props) {
     const [vitaminC, setVitaminC] = useState('')
 
     const addUnit = (num: string, setUnit: Function) => {
-        if(!num.includes('g')) {
+        if(num && !num.includes('g')) {
             setUnit(num + 'g')
         }
     }
@@ -53,6 +54,13 @@ export default function AddMealModal({modalVisible, setModalVisible}: Props) {
                         
                         <View style={styles.modalContent}>
                             <Text style={styles.modalTitle}>Add Meal</Text>
+                            <TextInput 
+                                placeholder="meal name"
+                                onChangeText={setName}
+                                value={name}
+                                style={styles.nameInput}
+                                />
+
                             <View style={styles.spaceBetween}>
                                 <Text style={styles.details}>Calories</Text>
                                 <TextInput style={styles.textInput}
@@ -254,6 +262,12 @@ const styles = StyleSheet.create({
         width: 40
     },
 
+    nameInput: {
+        fontSize: 20,
+        paddingBottom: 5,
+        borderBottomWidth: 1,
+    },
+
     modalView: {
         backgroundColor: 'white',
         height: '85%',
@@ -282,7 +296,7 @@ const styles = StyleSheet.create({
     },
 
     modalTitle: {
-        fontSize: 35,
+        fontSize: 30,
         fontWeight: 'bold'
     },
 
