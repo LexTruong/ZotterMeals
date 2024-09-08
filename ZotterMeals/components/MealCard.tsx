@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { Image, StyleSheet, Text, View, Pressable } from 'react-native'
+import { ImageBackground, Image, StyleSheet, Text, View, Pressable } from 'react-native'
 import MealInfoModal from './MealInfoModal'
 import { useState } from 'react'
 
@@ -15,7 +15,11 @@ export default function MealCard({info}: {info: MealCardInfo}) {
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
-                <Image style={styles.image} source={require('../assets/images/burger.jpg')} />
+                <ImageBackground style={styles.image} source={require('../assets/images/burger.jpg')}>
+                    <Pressable onPress={() => console.log('21s')}>
+                        <Ionicons style={styles.addIcon} name="add-circle-outline"></Ionicons>
+                    </Pressable>
+                </ImageBackground>
             </View>
             <View style={styles.text}>
                 <Text style={styles.name}>{info.name}</Text>
@@ -64,6 +68,14 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingLeft: 10,
         shadowColor: 'black'
+    },
+
+    addIcon: {
+        color: 'white',
+        textAlign: 'right',
+        fontSize: 35,
+        marginRight: 10,
+        marginTop: 10,
     },
 
     iconAlert: {

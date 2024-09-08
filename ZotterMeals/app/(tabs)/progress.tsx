@@ -6,11 +6,16 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import MyMeals from '@/components/MyMeals'
 import {useState} from 'react';
 import TotalProgressModal from '@/components/TotalProgressModal';
+import AddMealModal from '@/components/AddMealModal';
+import CalendarModal from '@/components/CalendarModal';
 
 export default function progress() {
     const calorieGoal = '/2000 Calories';
     const proteinGoal = '/150g Protein'
-    const [modalVisible, setModalVisible] = useState(false)
+    const [addModalVisible, setAddModalVisible] = useState(false)
+    const [totalModalVisible, setTotalModalVisible] = useState(false)
+    const [calendarModal, setCalendarModal] = useState(false)
+
 
     return (
         <View style={styles.container}>
@@ -49,14 +54,22 @@ export default function progress() {
             <View style={styles.titleIcons}>
                 <Text style={styles.myMeals}>My Meals</Text>
                 <View style={styles.icons}>
-                    <Ionicons style={[styles.icon, styles.add]} name="add-circle-outline"></Ionicons>
 
-                    <TotalProgressModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+                    <AddMealModal modalVisible={addModalVisible} setModalVisible={setAddModalVisible}/>
+                    <Pressable onPress={() => setAddModalVisible(!addModalVisible)}>
+                        <Ionicons style={[styles.icon, styles.add]} name="add-circle-outline"></Ionicons>
+                    </Pressable>
 
-                    <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                    <TotalProgressModal modalVisible={totalModalVisible} setModalVisible={setTotalModalVisible}/>
+                    <Pressable onPress={() => setTotalModalVisible(!totalModalVisible)}>
                         <Ionicons style={styles.icon} name="podium-outline"></Ionicons>
                     </Pressable>
-                    <Ionicons style={styles.icon} name="calendar-clear-outline"></Ionicons>
+
+
+                    <CalendarModal modalVisible={calendarModal} setModalVisible={setCalendarModal}/>
+                    <Pressable onPress={() => setCalendarModal(!calendarModal)}>
+                        <Ionicons style={styles.icon} name="calendar-clear-outline"></Ionicons>
+                    </Pressable>
                 </View>
             </View>
 

@@ -1,7 +1,11 @@
 import { StyleSheet, Platform, TouchableOpacity, View, Button, Text, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import LoginModal from '@/components/LoginModal';
 
 export default function HomeScreen() {
+  const [modalVisible, setModalVisible] = useState(false)
+
   const something = () => {
     console.log("21")
   }
@@ -18,7 +22,8 @@ export default function HomeScreen() {
       </View>
       <Image style={styles.logo} source={require('../../assets/images/eat.png')}></Image>
       <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button} onPress={something}>
+        <LoginModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+        <TouchableOpacity style={styles.button} onPress={() => setModalVisible(!modalVisible)}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={something2}>
