@@ -308,11 +308,11 @@ const styles = StyleSheet.create({
 
     details: {
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 18,
     },
 
     goals: {
-        fontSize: 20,
+        fontSize: 18,
     },
 
     addIconContainer: {

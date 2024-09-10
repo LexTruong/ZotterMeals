@@ -8,6 +8,7 @@ import {useState} from 'react';
 import TotalProgressModal from '@/components/TotalProgressModal';
 import AddMealModal from '@/components/AddMealModal';
 import CalendarModal from '@/components/CalendarModal';
+import {FIREBASE_AUTH} from '../../firebaseConfig.js';
 
 export default function progress() {
     const calorieGoal = '/2000 Calories';
@@ -15,11 +16,17 @@ export default function progress() {
     const [addModalVisible, setAddModalVisible] = useState(false)
     const [totalModalVisible, setTotalModalVisible] = useState(false)
     const [calendarModal, setCalendarModal] = useState(false)
-
+    const auth = FIREBASE_AUTH;
+    const user = auth.currentUser;
 
     return (
         <View style={styles.container}>
             <Header title="Progress"></Header>
+
+            <View>
+                <Text>Hello {user?.email}</Text>
+                <Button title="Sign out" onPress={() => auth.signOut()} />
+            </View>
 
             <View style={styles.progressBars}>
                 <CircularProgress

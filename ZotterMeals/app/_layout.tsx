@@ -1,37 +1,58 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, useRouter, useSegments } from 'expo-router'; 
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import { ActivityIndicator, View } from 'react-native';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { FIREBASE_AUTH } from '@/firebaseConfig';
+import 'react-native-reanimated'
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<User | null>(null)
+  const router = useRouter()
+  const segments = useSegments()
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      console.log('user', user);
+      setUser(user)
+      if (initializing) setInitializing(false)
+    })
+  }, [])
 
-  if (!loaded) {
-    return null;
+  useEffect(() => {
+    if (initializing) return;
+
+    const inTabs = segments[0] === '(tabs)';
+
+    if (user && !inTabs) { 
+      // user is logged in but on login screen
+      router.push('/(tabs)/meals')
+    } else if (!user && inTabs) {
+      // user is not logged in
+      router.replace('/')
+    }
+
+  }, [user, initializing])
+
+  if (initializing) {
+    return (
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex: 1
+      }}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
-  );
+    <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }}/>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
+    </Stack>
+  )
 }

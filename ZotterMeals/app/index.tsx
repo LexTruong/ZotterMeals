@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import LoginModal from '@/components/LoginModal';
 
+
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -20,7 +21,7 @@ export default function HomeScreen() {
         <Text style={styles.title}>ZotterMeals</Text>
         <Text style={styles.subtitle}>Simple Calorie Tracking for Anteaters</Text>
       </View>
-      <Image style={styles.logo} source={require('../../assets/images/eat.png')}></Image>
+      <Image style={styles.logo} source={require('../assets/images/eat.png')}></Image>
       <View style={styles.buttons}>
         <LoginModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
         <TouchableOpacity style={styles.button} onPress={() => setModalVisible(!modalVisible)}>

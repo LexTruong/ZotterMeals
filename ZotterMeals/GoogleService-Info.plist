@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDYFPi6-F3l95ZjV_R4SkeKhBfTtLuXSxI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>612649121880</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.reactnativefirebase</string>
+	<key>PROJECT_ID</key>
+	<string>zottermeals</string>
+	<key>STORAGE_BUCKET</key>
+	<string>zottermeals.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:612649121880:ios:6c5fc9a4c47cedd4d1322d</string>
+</dict>
+</plist>

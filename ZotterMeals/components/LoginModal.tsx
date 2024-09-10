@@ -1,6 +1,12 @@
-import { StyleSheet, View, Text, Modal, Pressable, TextInput, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, StyleSheet, View, Text, Modal, Pressable, TextInput, TouchableOpacity , Button, KeyboardAvoidingView} from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
+import {FIREBASE_AUTH} from '../firebaseConfig.js';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 interface Props {
     modalVisible: boolean,
@@ -8,12 +14,37 @@ interface Props {
 }
 
 export default function LoginModal({modalVisible, setModalVisible}: Props) {
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false);
+    const auth = FIREBASE_AUTH
 
-    const login = () => {
-        console.log(`username: ${username}, password: ${password}`)
-        setModalVisible(false)
+    const signIn = async () => {
+        setLoading(true)
+        try {
+            const response = await signInWithEmailAndPassword(auth, email, password)
+            console.log(response)
+            setModalVisible(false)
+        } catch (error: any) {
+            alert('Sign in failed: ' + error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const signUp = async () => {
+        setLoading(true)
+        try {
+            const response = await createUserWithEmailAndPassword(auth, email, password)
+            console.log(response)
+            alert('Check your emails!')
+            setModalVisible(false)
+        } catch(error: any) {
+            console.log(error)
+            alert("Sign in failed: " + error.message)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -38,23 +69,29 @@ export default function LoginModal({modalVisible, setModalVisible}: Props) {
 
                             <View style={styles.inputs}>
                                 <TextInput 
-                                placeholder="username"
-                                onChangeText={setUsername}
-                                value={username}
+                                placeholder="Email"
+                                onChangeText={setEmail}
+                                value={email}
                                 style={styles.input}
                                 />
                                 <TextInput 
                                 placeholder="password"
                                 onChangeText={setPassword}
                                 value={password}
+                                secureTextEntry
                                 style={styles.input}
                                 />
                             </View>
-
-                            <TouchableOpacity style={styles.button} onPress={login}>
-                                <Text style={styles.buttonText}>Go!</Text>
-                            </TouchableOpacity>
+                            { loading ? <ActivityIndicator size="large" color='#A81612'/>
+                            : <>
+                                <Button title="Login" onPress={() => signIn()}/>
+                                <Button title="CreateAccount" onPress={() => signUp()}/>
+                            </>
+                            }
                         </View>
+                        {/* <TouchableOpacity style={styles.button} onPress={login}>
+                            <Text style={styles.buttonText}>Go!</Text>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
             </Modal>
