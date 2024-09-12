@@ -1,12 +1,8 @@
-import { ActivityIndicator, StyleSheet, View, Text, Modal, Pressable, TextInput, TouchableOpacity , Button, KeyboardAvoidingView} from 'react-native'
+import { ActivityIndicator, StyleSheet, View, Text, Modal, Pressable, TextInput, TouchableOpacity } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 import {FIREBASE_AUTH} from '../firebaseConfig.js';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-const Stack = createNativeStackNavigator();
 
 interface Props {
     modalVisible: boolean,
@@ -69,7 +65,7 @@ export default function LoginModal({modalVisible, setModalVisible}: Props) {
 
                             <View style={styles.inputs}>
                                 <TextInput 
-                                placeholder="Email"
+                                placeholder="email"
                                 onChangeText={setEmail}
                                 value={email}
                                 style={styles.input}
@@ -83,15 +79,11 @@ export default function LoginModal({modalVisible, setModalVisible}: Props) {
                                 />
                             </View>
                             { loading ? <ActivityIndicator size="large" color='#A81612'/>
-                            : <>
-                                <Button title="Login" onPress={() => signIn()}/>
-                                <Button title="CreateAccount" onPress={() => signUp()}/>
-                            </>
+                            : <TouchableOpacity style={styles.button} onPress={() => signIn()}>
+                                <Text style={styles.buttonText}>Go!</Text>
+                            </TouchableOpacity>
                             }
                         </View>
-                        {/* <TouchableOpacity style={styles.button} onPress={login}>
-                            <Text style={styles.buttonText}>Go!</Text>
-                        </TouchableOpacity> */}
                     </View>
                 </View>
             </Modal>

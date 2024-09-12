@@ -2,10 +2,13 @@ import { StyleSheet, Platform, TouchableOpacity, View, Button, Text, Image } fro
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import LoginModal from '@/components/LoginModal';
+import SignUpModal from '@/components/SignUpModal';
 
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false)
+  const [signUpModalVisible, setSignUpModalVisible] = useState(false)
+
 
   const something = () => {
     console.log("21")
@@ -27,7 +30,9 @@ export default function HomeScreen() {
         <TouchableOpacity style={styles.button} onPress={() => setModalVisible(!modalVisible)}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={something2}>
+
+        <SignUpModal modalVisible={signUpModalVisible} setModalVisible={setSignUpModalVisible}/>
+        <TouchableOpacity style={styles.button}  onPress={() => setSignUpModalVisible(!signUpModalVisible)}>
           <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
       </View>
@@ -70,11 +75,10 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     overflow: 'visible'
-    // borderRadius: 100,
   },
   
   buttons: {
-    gap: 20,
+    gap: 15,
   },
 
   button: {
