@@ -3,10 +3,33 @@ import { ImageBackground, Image, StyleSheet, Text, View, Pressable } from 'react
 import MealInfoModal from './MealInfoModal'
 import { useState } from 'react'
 
-interface MealCardInfo {
+export interface MealCardInfo {
     name: string,
-    calories: number,
-    protein: number
+    description: string,
+    nutrition: {
+        isVegan: boolean | null,
+        isVegetarian: boolean | null,
+        servingSize: string | null,
+        servingUnit: string | null,
+        calories: string | null,
+        protein: string | null,
+        caloriesFromFat: string | null,
+        totalFat: string | null,
+        transFat: string | null,
+        cholesterol: string | null,
+        sodium: string | null,
+        totalCarbohydrates: string | null,
+        dietaryFiber: string | null,
+        sugars: string | null,
+        iron: string | null,
+        vitaminA: string | null,
+        vitaminC: string | null,
+        calcium: string | null,
+        saturatedFat: string | null,
+        isEatWell: boolean | null,
+        isPlantForward: boolean | null,
+        isWholeGrains: boolean | null,
+    }
 }
 
 export default function MealCard({info}: {info: MealCardInfo}) {
@@ -24,9 +47,9 @@ export default function MealCard({info}: {info: MealCardInfo}) {
             <View style={styles.text}>
                 <Text style={styles.name}>{info.name}</Text>
                 <View style={styles.details}>
-                    <Text>{info.calories} Calories</Text>
-                    <Text>{info.protein}g Protein</Text>
-                    <MealInfoModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                    <Text>{info.nutrition.calories} Calories</Text>
+                    <Text>{info.nutrition.protein}g Protein</Text>
+                    <MealInfoModal modalVisible={modalVisible} setModalVisible={setModalVisible} info={info}/>
                     <Pressable onPress={() => setModalVisible(!modalVisible)}>
                         <Ionicons style={styles.iconAlert} name="information-circle-outline"></Ionicons>
                     </Pressable>

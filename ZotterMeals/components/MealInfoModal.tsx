@@ -1,13 +1,15 @@
-import { StyleSheet, View, Text, Modal, Pressable } from 'react-native'
+import { ScrollView, StyleSheet, View, Text, Modal, Pressable } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import { MealCardInfo } from './MealCard';
 
 interface Props {
     modalVisible: boolean,
     setModalVisible: Function
+    info: MealCardInfo
 }
 
-export default function MealInfoModal({modalVisible, setModalVisible}: Props) {
+
+export default function MealInfoModal({modalVisible, setModalVisible, info}: Props) {
 
     return (
         <View>
@@ -27,74 +29,148 @@ export default function MealInfoModal({modalVisible, setModalVisible}: Props) {
                         
                         <View style={styles.modalContent}>
                             <View style={styles.modalSection}>
-                                <Text style={styles.modalTitle}>Burger</Text>
+                                <Text style={styles.modalTitle}>{info.name}</Text>
                                 <View style={styles.borderBottom}>
-                                    <Text style={styles.modalSubtitle}>Freshly baked chewy oatmeal cookie with raisins</Text>
+                                    <Text style={styles.modalSubtitle}>{info.description}</Text>
                                 </View>
+                                <ScrollView style={styles.scrollView} >
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Calories</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.calories}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Calories From Fat</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.caloriesFromFat}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Cholesterol</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.cholesterol}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Dietary Fiber</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.dietaryFiber}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Iron</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.iron}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Protien</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.protein}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Saturated Fat</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.satruatedFat}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Serving Size</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.servingSize}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Serving Unit</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.servingUnit}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Sodium</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.sodium}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Sugars</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.sugars}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Total Carbohydrates</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.totalCarbohydrates}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Total Fat</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.totalFat}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Trans Fat</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.transFat}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Vitamin A</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminA}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Vitamin C</Text>
-                                    <Text style={styles.goals}>100g</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
                                 </View>
+
+
+
+
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+                                <View style={styles.spaceBetween}>
+                                    <Text style={styles.details}>Vitamin C</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                </View>
+
+
+
+
+                                </ScrollView>
                             </View>
                         </View>
                     </View>
@@ -111,6 +187,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
 
+    scrollView: {
+        flexGrow: 1,
+    },
+
     modalView: {
         backgroundColor: 'white',
         height: '76%',
@@ -122,7 +202,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 5
         },
-        padding: 10
+        padding: 10, 
     },
 
     modalContent: {

@@ -62,7 +62,7 @@ export default function meals() {
                 </View>
             </PagerView>
             
-            <MealList />
+            <MealList location={diningHall ? 'brandywine' : 'anteatery'}/>
         </View>
     )
 }
