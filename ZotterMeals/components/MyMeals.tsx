@@ -2,41 +2,14 @@ import { StyleSheet, Platform, TouchableOpacity, View, Button, Text, Image, Flat
 import { StatusBar } from 'expo-status-bar';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MealStrip from './MealStrip'
+import { MealCardInfo } from './MealCard';
 
-
-export default function MyMeals() {
-    const DATA = [
-        {
-            name: "Burger",
-            calories: 1000,
-            protein: 30
-        },
-        {
-            name: "Oatmeal",
-            calories: 200,
-            protein: 9,
-        },
-        {
-            name: "Brownie",
-            calories: 300,
-            protein: 4,
-        },
-        {
-            name: "Apple",
-            calories: 10,
-            protein: 1,
-        },
-        {
-            name: "Shake",
-            calories: 200,
-            protein: 1,
-        },
-    ]
+export default function MyMeals({meals}: {meals: MealCardInfo[]}) {
 
     return (
         <View style={styles.container}>
             <FlatList style={styles.list}
-                data={DATA}
+                data={meals}
                 renderItem={({item}) => <MealStrip info={item} />}
             />
         </View>

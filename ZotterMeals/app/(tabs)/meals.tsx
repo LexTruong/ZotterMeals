@@ -14,9 +14,8 @@ export default function meals() {
     const switchDiningHall = () => {
         let next = diningHall ? 1 : 0
         ref.current?.setPage(next)
+        console.log(diningHall)
     }
-
-    // depending on current diningHall, fetch different meals
 
     return (
         <View style={styles.container}>
@@ -62,7 +61,7 @@ export default function meals() {
                 </View>
             </PagerView>
             
-            <MealList location={diningHall ? 'brandywine' : 'anteatery'}/>
+            <MealList location={diningHall ? 'anteatery' : 'brandywine'}/>
         </View>
     )
 }

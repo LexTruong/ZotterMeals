@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import MyMeals from '@/components/MyMeals'
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import TotalProgressModal from '@/components/TotalProgressModal';
 import AddMealModal from '@/components/AddMealModal';
 import CalendarModal from '@/components/CalendarModal';
@@ -19,6 +19,138 @@ export default function progress() {
     const auth = FIREBASE_AUTH;
     const user = auth.currentUser;
 
+    const [curCalories, setCurCalories] = useState(0)
+    const [curProtein, setCurProtein] = useState(0)
+
+    // fetch data from firebase for current nutrition info and past info
+    const DATA = [
+        {
+            "name": "Balsamic Vinaigrette",
+            "description": "Tangy balsamic vinaigrette dressing",
+            "nutrition": {
+                "isVegan": true,
+                "isVegetarian": true,
+                "servingSize": "2",
+                "servingUnit": "tablespoons",
+                "calories": "60",
+                "caloriesFromFat": "45",
+                "totalFat": "5",
+                "transFat": "0",
+                "cholesterol": "0",
+                "sodium": "200",
+                "totalCarbohydrates": "4",
+                "dietaryFiber": "0",
+                "sugars": "4",
+                "protein": "0",
+                "vitaminA": null,
+                "vitaminC": null,
+                "calcium": null,
+                "iron": null,
+                "saturatedFat": "0.5",
+                "isEatWell": false,
+                "isPlantForward": false,
+                "isWholeGrains": false
+            }
+        },
+        {
+            "name": "Creamy Caesar Dressing",
+            "description": "Creamy Caesar dressing",
+            "nutrition": {
+                "isVegan": false,
+                "isVegetarian": false,
+                "servingSize": "2",
+                "servingUnit": "tablespoons",
+                "calories": "140",
+                "caloriesFromFat": "140",
+                "totalFat": "15",
+                "transFat": "0",
+                "cholesterol": "0",
+                "sodium": "260",
+                "totalCarbohydrates": "1",
+                "dietaryFiber": "0",
+                "sugars": "less than 1",
+                "protein": "1",
+                "vitaminA": null,
+                "vitaminC": null,
+                "calcium": null,
+                "iron": null,
+                "saturatedFat": "2.5",
+                "isEatWell": false,
+                "isPlantForward": false,
+                "isWholeGrains": false
+            }
+        },
+        {
+            "name": "Lite Italian Dressing",
+            "description": "Lite Italian salad dressing",
+            "nutrition": {
+                "isVegan": true,
+                "isVegetarian": true,
+                "servingSize": "2",
+                "servingUnit": "tablespoons",
+                "calories": "40",
+                "caloriesFromFat": "30",
+                "totalFat": "3.5",
+                "transFat": "0",
+                "cholesterol": "0",
+                "sodium": "260",
+                "totalCarbohydrates": "2",
+                "dietaryFiber": "0",
+                "sugars": "2",
+                "protein": "0",
+                "vitaminA": null,
+                "vitaminC": null,
+                "calcium": null,
+                "iron": null,
+                "saturatedFat": "0.5",
+                "isEatWell": false,
+                "isPlantForward": false,
+                "isWholeGrains": false
+            }
+        },
+        {
+            "name": "Ranch Dressing",
+            "description": "Homestyle creamy ranch salad dressing",
+            "nutrition": {
+                "isVegan": false,
+                "isVegetarian": true,
+                "servingSize": "2",
+                "servingUnit": "tablespoons",
+                "calories": "100",
+                "caloriesFromFat": "90",
+                "totalFat": "10",
+                "transFat": "0",
+                "cholesterol": "10",
+                "sodium": "260",
+                "totalCarbohydrates": "1",
+                "dietaryFiber": "0",
+                "sugars": "less than 1",
+                "protein": "1",
+                "vitaminA": null,
+                "vitaminC": null,
+                "calcium": null,
+                "iron": null,
+                "saturatedFat": "1.5",
+                "isEatWell": false,
+                "isPlantForward": false,
+                "isWholeGrains": false
+            }
+        }
+    ]
+
+    useEffect(() => {
+        let totalCalories = 0
+        let totalProtein = 0
+
+        DATA.forEach(item => {
+            totalCalories += parseInt(item.nutrition.calories)
+            totalProtein += parseInt(item.nutrition.protein)
+        })
+
+        setCurCalories(totalCalories)
+        setCurProtein(totalProtein)
+    }, [DATA])
+
     return (
         <View style={styles.container}>
             <Header title="Progress"></Header>
@@ -30,7 +162,7 @@ export default function progress() {
 
             <View style={styles.progressBars}>
                 <CircularProgress
-                    value={1500}
+                    value={curCalories}
                     radius={100}
                     duration={3500}
                     progressValueColor={'black'}
@@ -44,7 +176,7 @@ export default function progress() {
                 />
 
                 <CircularProgress
-                    value={120}
+                    value={curProtein}
                     radius={100}
                     duration={3500}
                     progressValueColor={'black'}
@@ -80,7 +212,7 @@ export default function progress() {
                 </View>
             </View>
 
-            <MyMeals />
+            <MyMeals meals={DATA} />
         </View>
     )
 }

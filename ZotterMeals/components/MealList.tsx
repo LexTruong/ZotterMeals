@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 
 export default function MealList({location} : {location: string}) {
-    const [sections, setSections] = useState<SectionListData<object>[]>([])
+    const [sections, setSections] = useState<SectionListData<MealCardInfo>[]>([])
     
 
     useEffect(() => {
@@ -1062,16 +1062,13 @@ export default function MealList({location} : {location: string}) {
                     for(let j=0; j < category.items.length; j++) {
                         let item = category.items[j]
                         newStation.data.push(item)
-                        console.log(item)
                     }
                 }
                 
                 newSections.push(newStation)
-                // console.log(newStation)
             }
             
             setSections(newSections)
-            console.log(sections)
         // })
     }, [])
 
@@ -1080,7 +1077,7 @@ export default function MealList({location} : {location: string}) {
             {sections ?
             <SectionList
                 sections={sections}
-                renderItem={({item}) => <MealCard info={item} />}
+                renderItem={({item}: {item: MealCardInfo}) => <MealCard info={item} />}
                 renderSectionHeader={({section: {title}}) => (
                     <Text style={styles.sectionHeader}>{title}</Text>
                 )}
