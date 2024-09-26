@@ -3,9 +3,8 @@ import { initializeAuth, getReactNativePersistence } from "firebase/auth"
 import { getFirestore } from "firebase/firestore"
 import { ReactNativeAsyncStorage } from "@react-native-async-storage/async-storage"
 
-
 const firebaseConfig = {
-  apiKey: "AIzaSyBexjUvTOZLuuUyxAsnwkmC7shy2Tsrhk4",
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
   authDomain: "zottermeals.firebaseapp.com",
   projectId: "zottermeals",
   storageBucket: "zottermeals.appspot.com",
