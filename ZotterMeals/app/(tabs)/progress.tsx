@@ -163,7 +163,7 @@ export default function progress() {
             <View style={styles.progressBars}>
                 <CircularProgress
                     value={curCalories}
-                    radius={100}
+                    radius={90}
                     duration={3500}
                     progressValueColor={'black'}
                     maxValue={2000}
@@ -177,7 +177,7 @@ export default function progress() {
 
                 <CircularProgress
                     value={curProtein}
-                    radius={100}
+                    radius={90}
                     duration={3500}
                     progressValueColor={'black'}
                     maxValue={150}

@@ -57,29 +57,32 @@ export default function SignUpModal({modalVisible, setModalVisible}: Props) {
 
                             <View style={styles.inputs}>
                                 <TextInput 
-                                placeholder="email"
+                                placeholder="Email"
                                 onChangeText={setEmail}
                                 value={email}
+                                placeholderTextColor={'#817f7f'}
                                 style={styles.input}
                                 />
                                 <TextInput 
-                                placeholder="password"
+                                placeholder="Password"
                                 onChangeText={setPassword}
                                 value={password}
                                 secureTextEntry
+                                placeholderTextColor={'#817f7f'}
                                 style={styles.input}
                                 />
                                 <TextInput 
-                                placeholder="confirm password"
+                                placeholder="Confirm Password"
                                 onChangeText={setConfirmPassword}
                                 value={confirmPassword}
                                 secureTextEntry
+                                placeholderTextColor={'#817f7f'}
                                 style={styles.input}
                                 />
                             </View>
                             { loading ? <ActivityIndicator size="large" color='#A81612'/>
                             : <TouchableOpacity style={styles.button} onPress={() => signUp()}>
-                                <Text style={styles.buttonText}>Create Account!</Text>
+                                <Text style={styles.buttonText}>Create Account</Text>
                             </TouchableOpacity>
                             }
                         </View>

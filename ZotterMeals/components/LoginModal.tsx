@@ -65,16 +65,18 @@ export default function LoginModal({modalVisible, setModalVisible}: Props) {
 
                             <View style={styles.inputs}>
                                 <TextInput 
-                                placeholder="email"
+                                placeholder="Email"
                                 onChangeText={setEmail}
                                 value={email}
+                                placeholderTextColor={'#817f7f'}
                                 style={styles.input}
                                 />
                                 <TextInput 
-                                placeholder="password"
+                                placeholder="Password"
                                 onChangeText={setPassword}
                                 value={password}
                                 secureTextEntry
+                                placeholderTextColor={'#817f7f'}
                                 style={styles.input}
                                 />
                             </View>
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     inputs: {
         display: 'flex',
         flexDirection: 'column',
-        gap: 20,
+        gap: 30,
         marginTop: 20,
         marginBottom: 30
     },
@@ -140,6 +142,8 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         borderBottomWidth: 1,
     },
+
+
 
     button: {
         backgroundColor: "#A81612",
