@@ -1,8 +1,9 @@
 import { ActivityIndicator, StyleSheet, View, Text, Modal, Pressable, TextInput, TouchableOpacity , Button, KeyboardAvoidingView} from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
-import {FIREBASE_AUTH} from '../firebaseConfig.js';
+import {FIREBASE_AUTH, FIRESTORE_DB} from '../firebaseConfig.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 interface Props {
     modalVisible: boolean,
@@ -22,8 +23,21 @@ export default function SignUpModal({modalVisible, setModalVisible}: Props) {
             try {
                 const response = await createUserWithEmailAndPassword(auth, email, password)
                 console.log(response)
-                alert('Check your emails!')
+                alert('Account Created!')
                 setModalVisible(false)
+
+                // Add user to firestore DB
+
+
+                const currentUserId = FIREBASE_AUTH.currentUser?.uid
+                if (currentUserId) {
+                    const docRef = await setDoc(doc(FIRESTORE_DB, "users", currentUserId), {
+                        goals: {},
+                        currentDay: [],
+                        pastDates: []
+                    })
+                }
+                
             } catch(error: any) {
                 console.log(error)
                 alert("Sign in failed: " + error.message)
@@ -33,6 +47,7 @@ export default function SignUpModal({modalVisible, setModalVisible}: Props) {
         } else {
             alert("Passwords Do Not Match")
         }
+
     }
 
     return (

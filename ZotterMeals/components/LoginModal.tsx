@@ -28,21 +28,6 @@ export default function LoginModal({modalVisible, setModalVisible}: Props) {
         }
     }
 
-    const signUp = async () => {
-        setLoading(true)
-        try {
-            const response = await createUserWithEmailAndPassword(auth, email, password)
-            console.log(response)
-            alert('Check your emails!')
-            setModalVisible(false)
-        } catch(error: any) {
-            console.log(error)
-            alert("Sign in failed: " + error.message)
-        } finally {
-            setLoading(false)
-        }
-    }
-
     return (
         <View>
             <Modal

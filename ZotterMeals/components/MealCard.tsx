@@ -2,6 +2,8 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import { ImageBackground, Image, StyleSheet, Text, View, Pressable } from 'react-native'
 import MealInfoModal from './MealInfoModal'
 import { useState } from 'react'
+import {collection, addDoc, setDoc, doc, updateDoc, arrayUnion} from "firebase/firestore"
+import {FIREBASE_AUTH, FIRESTORE_DB } from '../firebaseConfig.js'
 
 export interface MealCardInfo {
     name: string,
@@ -35,11 +37,28 @@ export interface MealCardInfo {
 export default function MealCard({info}: {info: MealCardInfo}) {
     const [modalVisible, setModalVisible] = useState(false)
 
+    const currentUserId = FIREBASE_AUTH.currentUser?.uid
+
+    const addMealFirebase = async () => {
+        
+        if (currentUserId) {
+            try {
+                const docRef = await updateDoc(doc(FIRESTORE_DB, "users", currentUserId), {
+                  currentDay: arrayUnion(info)
+                });
+                console.log("Added meal");
+              } catch (e) {
+                console.error("Error adding document: ", e);
+              }
+        }
+
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
                 <ImageBackground style={styles.image} source={require('../assets/images/burger.jpg')}>
-                    <Pressable onPress={() => console.log('21s')}>
+                    <Pressable onPress={addMealFirebase}>
                         <Ionicons style={styles.addIcon} name="add-circle-outline"></Ionicons>
                     </Pressable>
                 </ImageBackground>

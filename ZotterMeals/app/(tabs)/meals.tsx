@@ -28,7 +28,6 @@ export default function meals() {
         .then(response => response.json())
         .then(data => {
             console.log("Meals from " + location)
-            console.log(data)
 
             let newSections: SectionListData<any, object>[] = []
 
