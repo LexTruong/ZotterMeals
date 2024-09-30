@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import { ImageBackground, Image, StyleSheet, Text, View, Pressable } from 'react-native'
 import MealInfoModal from './MealInfoModal'
 import { useState } from 'react'
-import {collection, addDoc, setDoc, doc, updateDoc, arrayUnion} from "firebase/firestore"
+import {collection, addDoc, setDoc, doc, updateDoc, arrayUnion, getDoc} from "firebase/firestore"
 import {FIREBASE_AUTH, FIRESTORE_DB } from '../firebaseConfig.js'
 
 export interface MealCardInfo {
@@ -43,9 +43,19 @@ export default function MealCard({info}: {info: MealCardInfo}) {
         
         if (currentUserId) {
             try {
-                const docRef = await updateDoc(doc(FIRESTORE_DB, "users", currentUserId), {
-                  currentDay: arrayUnion(info)
-                });
+                const docRef = doc(FIRESTORE_DB, "users", currentUserId);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    const currentData = docSnap.data()
+                    currentData.currentDay.push(info)
+                    
+                    await updateDoc(docRef, currentData)
+                } else {
+                    console.log("No such document!")
+                }
+
+                
                 console.log("Added meal");
               } catch (e) {
                 console.error("Error adding document: ", e);
