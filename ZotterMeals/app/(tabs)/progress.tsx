@@ -8,7 +8,11 @@ import {useEffect, useState} from 'react';
 import TotalProgressModal from '@/components/TotalProgressModal';
 import AddMealModal from '@/components/AddMealModal';
 import CalendarModal from '@/components/CalendarModal';
-import {FIREBASE_AUTH} from '../../firebaseConfig.js';
+import {FIREBASE_AUTH, FIRESTORE_DB} from '../../firebaseConfig.js';
+import { doc, getDoc } from 'firebase/firestore';
+import { MealCardInfo } from '@/components/MealCard.js';
+import { TotalInfoProps } from '@/components/TotalProgressModal.js';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function progress() {
     const calorieGoal = '/2000 Calories';
@@ -21,135 +25,101 @@ export default function progress() {
 
     const [curCalories, setCurCalories] = useState(0)
     const [curProtein, setCurProtein] = useState(0)
-
-    // fetch data from firebase for current nutrition info and past info
-    const DATA = [
+    const [curMealData, setCurMealData] = useState<MealCardInfo[]>([])
+    const [totalInfo, setTotalInfo] = useState<TotalInfoProps>(
         {
-            "name": "Balsamic Vinaigrette",
-            "description": "Tangy balsamic vinaigrette dressing",
-            "nutrition": {
-                "isVegan": true,
-                "isVegetarian": true,
-                "servingSize": "2",
-                "servingUnit": "tablespoons",
-                "calories": "60",
-                "caloriesFromFat": "45",
-                "totalFat": "5",
-                "transFat": "0",
-                "cholesterol": "0",
-                "sodium": "200",
-                "totalCarbohydrates": "4",
-                "dietaryFiber": "0",
-                "sugars": "4",
-                "protein": "0",
-                "vitaminA": null,
-                "vitaminC": null,
-                "calcium": null,
-                "iron": null,
-                "saturatedFat": "0.5",
-                "isEatWell": false,
-                "isPlantForward": false,
-                "isWholeGrains": false
-            }
-        },
-        {
-            "name": "Creamy Caesar Dressing",
-            "description": "Creamy Caesar dressing",
-            "nutrition": {
-                "isVegan": false,
-                "isVegetarian": false,
-                "servingSize": "2",
-                "servingUnit": "tablespoons",
-                "calories": "140",
-                "caloriesFromFat": "140",
-                "totalFat": "15",
-                "transFat": "0",
-                "cholesterol": "0",
-                "sodium": "260",
-                "totalCarbohydrates": "1",
-                "dietaryFiber": "0",
-                "sugars": "less than 1",
-                "protein": "1",
-                "vitaminA": null,
-                "vitaminC": null,
-                "calcium": null,
-                "iron": null,
-                "saturatedFat": "2.5",
-                "isEatWell": false,
-                "isPlantForward": false,
-                "isWholeGrains": false
-            }
-        },
-        {
-            "name": "Lite Italian Dressing",
-            "description": "Lite Italian salad dressing",
-            "nutrition": {
-                "isVegan": true,
-                "isVegetarian": true,
-                "servingSize": "2",
-                "servingUnit": "tablespoons",
-                "calories": "40",
-                "caloriesFromFat": "30",
-                "totalFat": "3.5",
-                "transFat": "0",
-                "cholesterol": "0",
-                "sodium": "260",
-                "totalCarbohydrates": "2",
-                "dietaryFiber": "0",
-                "sugars": "2",
-                "protein": "0",
-                "vitaminA": null,
-                "vitaminC": null,
-                "calcium": null,
-                "iron": null,
-                "saturatedFat": "0.5",
-                "isEatWell": false,
-                "isPlantForward": false,
-                "isWholeGrains": false
-            }
-        },
-        {
-            "name": "Ranch Dressing",
-            "description": "Homestyle creamy ranch salad dressing",
-            "nutrition": {
-                "isVegan": false,
-                "isVegetarian": true,
-                "servingSize": "2",
-                "servingUnit": "tablespoons",
-                "calories": "100",
-                "caloriesFromFat": "90",
-                "totalFat": "10",
-                "transFat": "0",
-                "cholesterol": "10",
-                "sodium": "260",
-                "totalCarbohydrates": "1",
-                "dietaryFiber": "0",
-                "sugars": "less than 1",
-                "protein": "1",
-                "vitaminA": null,
-                "vitaminC": null,
-                "calcium": null,
-                "iron": null,
-                "saturatedFat": "1.5",
-                "isEatWell": false,
-                "isPlantForward": false,
-                "isWholeGrains": false
-            }
-        }
-    ]
+        totalCalories: 0,
+        totalProtein: 0,
+        totalFat: 0,
+        totalTransFat: 0,
+        totalSaturatedFat: 0,
+        totalCholesterol: 0,
+        totalSodium: 0,
+        totalCarbohydrates: 0,
+        totalFiber: 0,
+        totalCalcium: 0,
+        totalSugars: 0,
+        totalIron: 0,
+        totalVitaminA: 0,
+        totalVitaminC: 0,
+    }
+)
+    const isFocused = useIsFocused();
 
     useEffect(() => {
-        let totalCalories = 0
-        let totalProtein = 0
+        // fetch data from firebase for current nutrition info and past info
+        const fetchData = async () => {
+            const currentUserId = FIREBASE_AUTH.currentUser?.uid
+            if (currentUserId) {
+                const docRef = doc(FIRESTORE_DB, "users", currentUserId)
+                const docSnap = await getDoc(docRef)
 
-        DATA.forEach(item => {
-            totalCalories += parseInt(item.nutrition.calories)
-            totalProtein += parseInt(item.nutrition.protein)
-        })
+                if (docSnap.exists()) {
+                    const currentMeals: MealCardInfo[] = docSnap.data().currentDay
 
-        setCurCalories(totalCalories)
-        setCurProtein(totalProtein)
-    }, [DATA])
+                    setCurMealData(currentMeals)
+
+                    // calculate total progress for current day
+                    let totalCalories = 0
+                    let totalProtein = 0
+                    let totalFat = 0
+                    let totalTransFat = 0
+                    let totalSaturatedFat = 0
+                    let totalCholesterol = 0
+                    let totalSodium = 0
+                    let totalCarbohydrates = 0
+                    let totalFiber = 0
+                    let totalSugars = 0
+                    let totalIron = 0
+                    let totalVitaminA = 0
+                    let totalVitaminC = 0
+                    let totalCalcium = 0
+            
+                    currentMeals.forEach(item => {
+                        totalCalories += parseInt(item.nutrition.calories ?? '0')
+                        totalProtein += parseInt(item.nutrition.protein ?? '0')
+                        totalFat += parseInt(item.nutrition.totalFat ?? '0')
+                        totalTransFat += parseInt(item.nutrition.transFat ?? '0')
+                        totalSaturatedFat += parseInt(item.nutrition.saturatedFat ?? '0')
+                        totalCholesterol += parseInt(item.nutrition.cholesterol ?? '0')
+                        totalSodium += parseInt(item.nutrition.sodium ?? '0')
+                        totalCarbohydrates += parseInt(item.nutrition.totalCarbohydrates ?? '0')
+                        totalFiber += parseInt(item.nutrition.dietaryFiber ?? '0')
+                        totalSugars += parseInt(item.nutrition.sugars ?? '0')
+                        totalIron += parseInt(item.nutrition.iron ?? '0')
+                        totalVitaminA += parseInt(item.nutrition.vitaminA ?? '0')
+                        totalVitaminC += parseInt(item.nutrition.vitaminC ?? '0')
+                        totalCalcium += parseInt(item.nutrition.calcium ?? '0')
+                    })
+
+                    setTotalInfo({
+                        totalCalories,
+                        totalProtein,
+                        totalFat,
+                        totalTransFat,
+                        totalSaturatedFat,
+                        totalCholesterol,
+                        totalSodium,
+                        totalCarbohydrates,
+                        totalFiber,
+                        totalCalcium,
+                        totalSugars,
+                        totalIron,
+                        totalVitaminA,
+                        totalVitaminC,
+                    })
+            
+                    setCurCalories(totalCalories)
+                    setCurProtein(totalProtein)
+
+                } else {
+                    console.log("No such document!")
+                }
+            }
+        }
+
+        fetchData()
+    }, [isFocused])
 
     return (
         <View style={styles.container}>
@@ -199,11 +169,10 @@ export default function progress() {
                         <Ionicons style={[styles.icon, styles.add]} name="add-circle-outline"></Ionicons>
                     </Pressable>
 
-                    <TotalProgressModal modalVisible={totalModalVisible} setModalVisible={setTotalModalVisible}/>
+                    <TotalProgressModal modalVisible={totalModalVisible} setModalVisible={setTotalModalVisible} totalInfo={totalInfo}/>
                     <Pressable onPress={() => setTotalModalVisible(!totalModalVisible)}>
                         <Ionicons style={styles.icon} name="podium-outline"></Ionicons>
                     </Pressable>
-
 
                     <CalendarModal modalVisible={calendarModal} setModalVisible={setCalendarModal}/>
                     <Pressable onPress={() => setCalendarModal(!calendarModal)}>
@@ -212,7 +181,7 @@ export default function progress() {
                 </View>
             </View>
 
-            <MyMeals meals={DATA} />
+            <MyMeals meals={curMealData} />
         </View>
     )
 }

@@ -38,13 +38,13 @@ export default function MealInfoModal({modalVisible, setModalVisible, info}: Pro
                                 <ScrollView style={styles.scrollView} >
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Serving Size</Text>
-                                    <Text style={styles.goals}>{info.nutrition.servingSize}</Text>
+                                    <Text style={styles.goals}>{info.nutrition.servingSize} {info.nutrition.servingUnit}</Text>
                                 </View>
-                                <View style={[styles.caloriesSpaceBetween, styles.spaceBetween]}>
+                                <View style={[styles.thickBorderSpaceBetween, styles.spaceBetween]}>
                                     <Text style={styles.details}>Calories</Text>
                                     <Text style={styles.goals}>{info.nutrition.calories}</Text>
                                 </View>
-                                <View style={styles.spaceBetween}>
+                                <View style={[styles.spaceBetween, styles.singleSpaceBetweenNoBorder]}>
                                     <Text style={styles.details}>Total Fat</Text>
                                     <Text style={styles.goals}>{info.nutrition.totalFat} g</Text>
                                 </View>
@@ -52,42 +52,37 @@ export default function MealInfoModal({modalVisible, setModalVisible, info}: Pro
                                     <Text style={styles.detailsSmall}>   Saturated Fat</Text>
                                     <Text style={styles.goals}>{info.nutrition.saturatedFat} g</Text>
                                 </View>
-                                <View style={[styles.spaceBetween, styles.fatSpaceBetween]}>
+                                <View style={[styles.spaceBetween, styles.thinBorderSpaceBetween]}>
                                     <Text style={styles.detailsSmall}>   Trans Fat</Text>
                                     <Text style={styles.goals}>{info.nutrition.transFat} g</Text>
                                 </View>
-                                <View style={styles.spaceBetween}>
+                                <View style={[styles.spaceBetween, styles.singleSpaceBetween]}>
                                     <Text style={styles.details}>Cholesterol</Text>
-                                    <Text style={styles.goals}>{info.nutrition.cholesterol}</Text>
+                                    <Text style={styles.goals}>{info.nutrition.cholesterol} mg</Text>
+                                </View>
+                                <View style={[styles.spaceBetween, styles.singleSpaceBetween]}>
+                                    <Text style={styles.details}>Sodium</Text>
+                                    <Text style={styles.goals}>{info.nutrition.sodium} mg</Text>
+                                </View>
+                                <View style={[styles.spaceBetween, styles.singleSpaceBetweenNoBorder]}>
+                                    <Text style={styles.details}>Total Carbohydrates</Text>
+                                    <Text style={styles.goals}>{info.nutrition.totalCarbohydrates} g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Dietary Fiber</Text>
-                                    <Text style={styles.goals}>{info.nutrition.dietaryFiber}</Text>
+                                    <Text style={styles.detailsSmall}>   Dietary Fiber</Text>
+                                    <Text style={styles.goals}>{info.nutrition.dietaryFiber} g</Text>
+                                </View>
+                                <View style={[styles.spaceBetween, styles.thinBorderSpaceBetween]}>
+                                    <Text style={styles.detailsSmall}>   Total Sugars</Text>
+                                    <Text style={styles.goals}>{info.nutrition.sugars} g</Text>
+                                </View>
+                                <View style={[styles.spaceBetween, styles.singleSpaceBetween]}>
+                                    <Text style={styles.details}>Protein</Text>
+                                    <Text style={styles.goals}>{info.nutrition.protein} g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Iron</Text>
                                     <Text style={styles.goals}>{info.nutrition.iron}</Text>
-                                </View>
-                                <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Protein</Text>
-                                    <Text style={styles.goals}>{info.nutrition.protein}</Text>
-                                </View>
-
-                                <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Serving Unit</Text>
-                                    <Text style={styles.goals}>{info.nutrition.servingUnit}</Text>
-                                </View>
-                                <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Sodium</Text>
-                                    <Text style={styles.goals}>{info.nutrition.sodium}</Text>
-                                </View>
-                                <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Sugars</Text>
-                                    <Text style={styles.goals}>{info.nutrition.sugars}</Text>
-                                </View>
-                                <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Total Carbohydrates</Text>
-                                    <Text style={styles.goals}>{info.nutrition.totalCarbohydrates}</Text>
                                 </View>
 
                                 <View style={styles.spaceBetween}>
@@ -190,13 +185,24 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     
-    caloriesSpaceBetween: {
+    thickBorderSpaceBetween: {
         borderBottomWidth: 2,
         paddingBottom: 5,
     },
 
-    fatSpaceBetween: {
+    thinBorderSpaceBetween: {
         borderBottomWidth: 1,
+        paddingBottom: 5,
+    },
+
+    singleSpaceBetween: {
+        borderBottomWidth: 1,
+        paddingTop: 5,
+        paddingBottom: 5,
+    },
+
+    singleSpaceBetweenNoBorder: {
+        paddingTop: 5,
         paddingBottom: 5,
     }
 

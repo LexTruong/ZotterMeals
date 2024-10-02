@@ -47,15 +47,18 @@ export default function MealCard({info}: {info: MealCardInfo}) {
                 const docSnap = await getDoc(docRef);
                 
                 if (docSnap.exists()) {
-                    const currentData = docSnap.data()
-                    currentData.currentDay.push(info)
+                    const currentMeals = docSnap.data().currentDay
+                    currentMeals.push(info)
                     
-                    await updateDoc(docRef, currentData)
+                    await updateDoc(docRef, {
+                        currentDay: currentMeals
+                    })
+
+                    alert("Added " + info.name)
                 } else {
                     console.log("No such document!")
                 }
 
-                
                 console.log("Added meal");
               } catch (e) {
                 console.error("Error adding document: ", e);

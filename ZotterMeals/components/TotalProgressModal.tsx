@@ -1,13 +1,30 @@
 import { StyleSheet, View, Text, Modal, Pressable } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+export interface TotalInfoProps {
+    totalCalories: number,
+    totalProtein: number,
+    totalFat: number,
+    totalTransFat: number,
+    totalSaturatedFat: number,
+    totalCholesterol: number,
+    totalSodium: number,
+    totalCarbohydrates: number,
+    totalFiber: number,
+    totalSugars: number,
+    totalIron: number,
+    totalVitaminA: number,
+    totalVitaminC: number,
+    totalCalcium: number
+}
 
 interface Props {
     modalVisible: boolean,
-    setModalVisible: Function
+    setModalVisible: Function,
+    totalInfo: TotalInfoProps
 }
 
-export default function TotalProgressModal({modalVisible, setModalVisible}: Props) {
+export default function TotalProgressModal({modalVisible, setModalVisible, totalInfo }: Props) {
 
     return (
         <View>
@@ -30,67 +47,55 @@ export default function TotalProgressModal({modalVisible, setModalVisible}: Prop
                                 <Text style={styles.modalTitle}>Total Progress</Text>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Calories</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
-                                </View>
-                                <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Calories From Fat</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalCalories}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Cholesterol</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalCholesterol}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Dietary Fiber</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalFiber}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Iron</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalIron}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Protien</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.details}>Protein</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalProtein}g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Saturated Fat</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
-                                </View>
-                                <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Serving Size</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
-                                </View>
-                                <View style={styles.spaceBetween}>
-                                    <Text style={styles.details}>Serving Unit</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalSaturatedFat}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Sodium</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalSodium}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Sugars</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalSugars}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Total Carbohydrates</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalCarbohydrates}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Total Fat</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalFat}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Trans Fat</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalTransFat}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Vitamin A</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalVitaminA}</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Vitamin C</Text>
-                                    <Text style={styles.goals}>100g/200g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalVitaminC}</Text>
                                 </View>
                             </View>
                         </View>
