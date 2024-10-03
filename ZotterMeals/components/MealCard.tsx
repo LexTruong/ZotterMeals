@@ -1,9 +1,10 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { ImageBackground, Image, StyleSheet, Text, View, Pressable } from 'react-native'
 import MealInfoModal from './MealInfoModal'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import {collection, addDoc, setDoc, doc, updateDoc, arrayUnion, getDoc} from "firebase/firestore"
 import {FIREBASE_AUTH, FIRESTORE_DB } from '../firebaseConfig.js'
+import * as Haptics from 'expo-haptics';
 
 export interface MealCardInfo {
     name: string,
@@ -34,12 +35,13 @@ export interface MealCardInfo {
     }
 }
 
-export default function MealCard({info}: {info: MealCardInfo}) {
+function MealCard({info}: {info: MealCardInfo}) {
     const [modalVisible, setModalVisible] = useState(false)
 
     const currentUserId = FIREBASE_AUTH.currentUser?.uid
 
     const addMealFirebase = async () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
         
         if (currentUserId) {
             try {
@@ -90,6 +92,8 @@ export default function MealCard({info}: {info: MealCardInfo}) {
         </View>
     )
 }
+
+export default memo(MealCard)
 
 const styles = StyleSheet.create({
     container: {

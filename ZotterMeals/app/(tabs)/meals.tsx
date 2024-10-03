@@ -27,7 +27,7 @@ export default function meals() {
         fetch(`http://zotmeal-backend.vercel.app/api?location=${location}`)
         .then(response => response.json())
         .then(data => {
-            console.log("Meals from " + location)
+            console.log("Showing meals from " + location)
 
             let newSections: SectionListData<any, object>[] = []
 
@@ -53,7 +53,6 @@ export default function meals() {
             
             setSections(newSections)
             setCurMeal(data.currentMeal)
-            console.log(data.currentMeal)
         })
     }, [diningHall])
 
