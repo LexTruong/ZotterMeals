@@ -9,10 +9,11 @@ import TotalProgressModal from '@/components/TotalProgressModal';
 import AddMealModal from '@/components/AddMealModal';
 import CalendarModal from '@/components/CalendarModal';
 import {FIREBASE_AUTH, FIRESTORE_DB} from '../../firebaseConfig.js';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { MealCardInfo } from '@/components/MealCard.js';
 import { TotalInfoProps } from '@/components/TotalProgressModal.js';
 import { useIsFocused } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 export default function progress() {
     const calorieGoal = '/2000 Calories';
@@ -46,78 +47,79 @@ export default function progress() {
 )
     const isFocused = useIsFocused();
 
-    useEffect(() => {
-        // fetch data from firebase for current nutrition info and past info
-        const fetchData = async () => {
-            const currentUserId = FIREBASE_AUTH.currentUser?.uid
-            if (currentUserId) {
-                const docRef = doc(FIRESTORE_DB, "users", currentUserId)
-                const docSnap = await getDoc(docRef)
+    // fetch data from firebase for current nutrition info and past info
+    const fetchData = async () => {
+        const currentUserId = FIREBASE_AUTH.currentUser?.uid
 
-                if (docSnap.exists()) {
-                    const currentMeals: MealCardInfo[] = docSnap.data().currentDay
+        if (currentUserId) {
+            const docRef = doc(FIRESTORE_DB, "users", currentUserId)
+            const docSnap = await getDoc(docRef)        
 
-                    setCurMealData(currentMeals)
+            if (docSnap.exists()) {
+                const currentMeals: MealCardInfo[] = docSnap.data().currentDay
 
-                    // calculate total progress for current day
-                    let totalCalories = 0
-                    let totalProtein = 0
-                    let totalFat = 0
-                    let totalTransFat = 0
-                    let totalSaturatedFat = 0
-                    let totalCholesterol = 0
-                    let totalSodium = 0
-                    let totalCarbohydrates = 0
-                    let totalFiber = 0
-                    let totalSugars = 0
-                    let totalIron = 0
-                    let totalVitaminA = 0
-                    let totalVitaminC = 0
-                    let totalCalcium = 0
-            
-                    currentMeals.forEach(item => {
-                        totalCalories += parseInt(item.nutrition.calories ?? '0')
-                        totalProtein += parseInt(item.nutrition.protein ?? '0')
-                        totalFat += parseInt(item.nutrition.totalFat ?? '0')
-                        totalTransFat += parseInt(item.nutrition.transFat ?? '0')
-                        totalSaturatedFat += parseInt(item.nutrition.saturatedFat ?? '0')
-                        totalCholesterol += parseInt(item.nutrition.cholesterol ?? '0')
-                        totalSodium += parseInt(item.nutrition.sodium ?? '0')
-                        totalCarbohydrates += parseInt(item.nutrition.totalCarbohydrates ?? '0')
-                        totalFiber += parseInt(item.nutrition.dietaryFiber ?? '0')
-                        totalSugars += parseInt(item.nutrition.sugars ?? '0')
-                        totalIron += parseInt(item.nutrition.iron ?? '0')
-                        totalVitaminA += parseInt(item.nutrition.vitaminA ?? '0')
-                        totalVitaminC += parseInt(item.nutrition.vitaminC ?? '0')
-                        totalCalcium += parseInt(item.nutrition.calcium ?? '0')
-                    })
+                setCurMealData(currentMeals)
 
-                    setTotalInfo({
-                        totalCalories,
-                        totalProtein,
-                        totalFat,
-                        totalTransFat,
-                        totalSaturatedFat,
-                        totalCholesterol,
-                        totalSodium,
-                        totalCarbohydrates,
-                        totalFiber,
-                        totalCalcium,
-                        totalSugars,
-                        totalIron,
-                        totalVitaminA,
-                        totalVitaminC,
-                    })
-            
-                    setCurCalories(totalCalories)
-                    setCurProtein(totalProtein)
+                // calculate total progress for current day
+                let totalCalories = 0
+                let totalProtein = 0
+                let totalFat = 0
+                let totalTransFat = 0
+                let totalSaturatedFat = 0
+                let totalCholesterol = 0
+                let totalSodium = 0
+                let totalCarbohydrates = 0
+                let totalFiber = 0
+                let totalSugars = 0
+                let totalIron = 0
+                let totalVitaminA = 0
+                let totalVitaminC = 0
+                let totalCalcium = 0
+        
+                currentMeals.forEach(item => {
+                    totalCalories += parseInt(item.nutrition.calories ?? '0')
+                    totalProtein += parseInt(item.nutrition.protein ?? '0')
+                    totalFat += parseInt(item.nutrition.totalFat ?? '0')
+                    totalTransFat += parseInt(item.nutrition.transFat ?? '0')
+                    totalSaturatedFat += parseInt(item.nutrition.saturatedFat ?? '0')
+                    totalCholesterol += parseInt(item.nutrition.cholesterol ?? '0')
+                    totalSodium += parseInt(item.nutrition.sodium ?? '0')
+                    totalCarbohydrates += parseInt(item.nutrition.totalCarbohydrates ?? '0')
+                    totalFiber += parseInt(item.nutrition.dietaryFiber ?? '0')
+                    totalSugars += parseInt(item.nutrition.sugars ?? '0')
+                    totalIron += parseInt(item.nutrition.iron ?? '0')
+                    totalVitaminA += parseInt(item.nutrition.vitaminA ?? '0')
+                    totalVitaminC += parseInt(item.nutrition.vitaminC ?? '0')
+                    totalCalcium += parseInt(item.nutrition.calcium ?? '0')
+                })
 
-                } else {
-                    console.log("No such document!")
-                }
+                setTotalInfo({
+                    totalCalories,
+                    totalProtein,
+                    totalFat,
+                    totalTransFat,
+                    totalSaturatedFat,
+                    totalCholesterol,
+                    totalSodium,
+                    totalCarbohydrates,
+                    totalFiber,
+                    totalCalcium,
+                    totalSugars,
+                    totalIron,
+                    totalVitaminA,
+                    totalVitaminC,
+                })
+        
+                setCurCalories(totalCalories)
+                setCurProtein(totalProtein)
+
+            } else {
+                console.log("No such document!")
             }
         }
+    }
 
+    useEffect(() => {
         fetchData()
     }, [isFocused])
 
@@ -181,7 +183,7 @@ export default function progress() {
                 </View>
             </View>
 
-            <MyMeals meals={curMealData} />
+            <MyMeals meals={curMealData} updateData={fetchData} />
         </View>
     )
 }

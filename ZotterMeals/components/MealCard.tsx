@@ -71,13 +71,13 @@ function MealCard({info}: {info: MealCardInfo}) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.imageContainer}>
+            {/* <View style={styles.imageContainer}>
                 <ImageBackground style={styles.image} source={require('../assets/images/burger.jpg')}>
                     <Pressable onPress={addMealFirebase}>
                         <Ionicons style={styles.addIcon} name="add-circle-outline"></Ionicons>
                     </Pressable>
                 </ImageBackground>
-            </View>
+            </View> */}
             <View style={styles.text}>
                 <Text style={styles.name}>{info.name}</Text>
                 <View style={styles.details}>
@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
         shadowOffset: {
             width: 0,
             height: 5
-        }
+        },
+        height: 100
     },
 
     imageContainer: {

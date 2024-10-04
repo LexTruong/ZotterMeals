@@ -4,13 +4,18 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MealStrip from './MealStrip'
 import { MealCardInfo } from './MealCard';
 
-export default function MyMeals({meals}: {meals: MealCardInfo[]}) {
+interface Props {
+    meals: MealCardInfo[],
+    updateData: Function
+}
+
+export default function MyMeals({meals, updateData}: Props) {
 
     return (
         <View style={styles.container}>
             <FlatList style={styles.list}
                 data={meals}
-                renderItem={({item}) => <MealStrip info={item} />}
+                renderItem={({item}) => <MealStrip info={item} updateData={updateData}/>}
             />
         </View>
     )

@@ -3,9 +3,14 @@ import { StyleSheet, Text, View , Pressable} from 'react-native'
 import MealInfoModal from '@/components/MealInfoModal';
 import {useState} from 'react';
 import { MealCardInfo } from './MealCard';
+import ProgressMealInfoModal from './ProgressMealInfoModal';
 
+interface Props {
+    info: MealCardInfo,
+    updateData: Function
+}
 
-export default function MealStrip({info}: {info: MealCardInfo}) {
+export default function MealStrip({info, updateData}: Props) {
     const [modalVisible, setModalVisible] = useState(false)
 
     return (
@@ -18,7 +23,7 @@ export default function MealStrip({info}: {info: MealCardInfo}) {
                 </View>
             </View>
 
-            <MealInfoModal modalVisible={modalVisible} setModalVisible={setModalVisible} info={info}/>
+            <ProgressMealInfoModal modalVisible={modalVisible} setModalVisible={setModalVisible} info={info} updateData={updateData}/>
             <Pressable onPress={() => setModalVisible(!modalVisible)}>
                 <Ionicons style={styles.iconAlert} name="information-circle-outline"></Ionicons>
             </Pressable>
