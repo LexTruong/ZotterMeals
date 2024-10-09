@@ -6,11 +6,14 @@ import {useEffect, useRef, useState} from 'react';
 import DiningInfoModal from '@/components/DiningInfoModal';
 import PagerView from 'react-native-pager-view';
 import { MealCardInfo } from '@/components/MealCard';
+import MealTypeModal from '@/components/MealTypeModal';
 
 export default function meals() {
     const [diningHall, setDiningHall] = useState(false)
-    const [modalVisible, setModalVisible] = useState(false)
+    const [diningModalVisible, setDiningModalVisible] = useState(false)
+    const [mealTypeModalVisible, setMealTypeModalVisible] = useState(false)
     const [curMeal, setCurMeal] = useState('')
+    const [mealType, setMealType] = useState('')
     const ref = useRef<PagerView | null>(null)
     
     const switchDiningHall = () => {
@@ -53,8 +56,52 @@ export default function meals() {
             
             setSections(newSections)
             setCurMeal(data.currentMeal)
+            setMealType(data.currentMeal)
+            console.log("changed meal")
         })
     }, [diningHall])
+
+    const changeMealInfo = () => {
+        const location = diningHall ? 'anteatery' : 'brandywine'
+        console.log(mealType)
+        let mealNum = 0;
+        if (mealType == "lunch") {
+            mealNum = 1;
+        } else if (mealType == "dinner") {
+            mealNum = 2;
+        }
+
+        fetch(`http://zotmeal-backend.vercel.app/api?location=${location}&meal=${mealNum}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Showing meals for " + mealType)
+            console.log(data)
+
+            let newSections: SectionListData<any, object>[] = []
+
+            for(let i=0; i < data.all.length; i++) {
+                let curStation= data.all[i]
+
+                let newStation: {title: any, data: MealCardInfo[]} = {
+                    title: curStation.station,
+                    data: []
+                }
+                
+                for(let k=0; k < curStation.menu.length; k++) {
+                    let category = curStation.menu[k]
+
+                    for(let j=0; j < category.items.length; j++) {
+                        let item = category.items[j]
+                        newStation.data.push(item)
+                    }
+                }
+                
+                newSections.push(newStation)
+            }
+            
+            setSections(newSections)
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -72,11 +119,12 @@ export default function meals() {
                         <View style={styles.icons}>
                             <View style={styles.leftIcons}>
                                 <Ionicons style={styles.iconCalendar} name="swap-horizontal" onPress={() => switchDiningHall()}></Ionicons>
-                                <Ionicons style={styles.iconCalendar} name="calendar-clear-outline"></Ionicons> 
+                                <MealTypeModal modalVisible={mealTypeModalVisible} setModalVisible={setMealTypeModalVisible} mealType={mealType} setMealType={setMealType} changeMealInfo={changeMealInfo} />
+                                <Ionicons style={styles.iconCalendar} name="time" onPress={() => setMealTypeModalVisible(!mealTypeModalVisible)}></Ionicons> 
                             </View>
-                            <Text style={styles.openText}>Open for {curMeal}</Text>
-                            <DiningInfoModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
-                            <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                            <Text style={styles.openText}>Showing {mealType}</Text>
+                            <DiningInfoModal modalVisible={diningModalVisible} setModalVisible={setDiningModalVisible} />
+                            <Pressable onPress={() => setDiningModalVisible(!diningModalVisible)}>
                                 <Ionicons style={styles.iconAlert}name="information-circle-outline"></Ionicons>
                             </Pressable>
                         </View>
@@ -88,11 +136,11 @@ export default function meals() {
                         <View style={styles.icons}>
                             <View style={styles.leftIcons}>
                                 <Ionicons style={styles.iconCalendar} name="swap-horizontal" onPress={() => switchDiningHall()}></Ionicons>
-                                <Ionicons style={styles.iconCalendar} name="calendar-clear-outline"></Ionicons> 
+                                <Ionicons style={styles.iconCalendar} name="time"  onPress={() => setMealTypeModalVisible(!mealTypeModalVisible)}></Ionicons> 
                             </View>
-                            <Text style={styles.openText}>Open for {curMeal}</Text>
-                            <DiningInfoModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
-                            <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                            <Text style={styles.openText}>Showing {mealType}</Text>
+                            <DiningInfoModal modalVisible={diningModalVisible} setModalVisible={setDiningModalVisible} />
+                            <Pressable onPress={() => setDiningModalVisible(!diningModalVisible)}>
                                 <Ionicons style={styles.iconAlert}name="information-circle-outline"></Ionicons>
                             </Pressable>
                         </View>

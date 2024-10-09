@@ -51,51 +51,51 @@ export default function TotalProgressModal({modalVisible, setModalVisible, total
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Cholesterol</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalCholesterol}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalCholesterol} mg</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Dietary Fiber</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalFiber}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalFiber} g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Iron</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalIron}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalIron} mg</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Protein</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalProtein}g</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalProtein} g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Saturated Fat</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalSaturatedFat}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalSaturatedFat} g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Sodium</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalSodium}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalSodium} mg</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Sugars</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalSugars}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalSugars} g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Total Carbohydrates</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalCarbohydrates}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalCarbohydrates} g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Total Fat</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalFat}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalFat} g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Trans Fat</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalTransFat}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalTransFat} g</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Vitamin A</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalVitaminA}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalVitaminA} IU</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Vitamin C</Text>
-                                    <Text style={styles.goals}>{totalInfo.totalVitaminC}</Text>
+                                    <Text style={styles.goals}>{totalInfo.totalVitaminC} IU</Text>
                                 </View>
                             </View>
                         </View>

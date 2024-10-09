@@ -106,20 +106,20 @@ export default function ProgressMealInfoModal({modalVisible, setModalVisible, in
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Iron</Text>
-                                    <Text style={styles.goals}>{info.nutrition.iron}</Text>
+                                    <Text style={styles.goals}>{info.nutrition.iron} mg</Text>
                                 </View>
 
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Vitamin A</Text>
-                                    <Text style={styles.goals}>{info.nutrition.vitaminA}</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminA} IU</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Vitamin C</Text>
-                                    <Text style={styles.goals}>{info.nutrition.vitaminC}</Text>
+                                    <Text style={styles.goals}>{info.nutrition.vitaminC} IU</Text>
                                 </View>
                                 <View style={styles.spaceBetween}>
                                     <Text style={styles.details}>Calcium</Text>
-                                    <Text style={styles.goals}>{info.nutrition.calcium}</Text>
+                                    <Text style={styles.goals}>{info.nutrition.calcium} mg</Text>
                                 </View>
                                 </ScrollView>
 

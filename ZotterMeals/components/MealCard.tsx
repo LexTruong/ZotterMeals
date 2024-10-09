@@ -71,16 +71,14 @@ function MealCard({info}: {info: MealCardInfo}) {
 
     return (
         <View style={styles.container}>
-            {/* <View style={styles.imageContainer}>
-                <ImageBackground style={styles.image} source={require('../assets/images/burger.jpg')}>
+            <View style={styles.text}>
+                <View style={styles.details}>
+                    <Text style={styles.name}>{info.name}</Text>
                     <Pressable onPress={addMealFirebase}>
                         <Ionicons style={styles.addIcon} name="add-circle-outline"></Ionicons>
                     </Pressable>
-                </ImageBackground>
-            </View> */}
-            <View style={styles.text}>
-                <Text style={styles.name}>{info.name}</Text>
-                <View style={styles.details}>
+                </View>
+            <View style={styles.details}>
                     <Text>{info.nutrition.calories} Calories</Text>
                     <Text>{info.nutrition.protein}g Protein</Text>
                     <MealInfoModal modalVisible={modalVisible} setModalVisible={setModalVisible} info={info}/>
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 5
         },
-        height: 100
+        height: 80
     },
 
     imageContainer: {
@@ -125,17 +123,15 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        paddingVertical: 5,
+        paddingVertical: 10,
         paddingLeft: 10,
-        shadowColor: 'black'
+        shadowColor: 'black',
     },
 
     addIcon: {
-        color: 'white',
-        textAlign: 'right',
-        fontSize: 35,
-        marginRight: 10,
-        marginTop: 10,
+        color: 'black',
+        fontSize: 24,
+        marginRight: 11,
     },
 
     iconAlert: {
@@ -148,12 +144,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         paddingBottom: 5,
+        color: '#433131'
     },
 
     details: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingBottom: 13,
     }
 
 })

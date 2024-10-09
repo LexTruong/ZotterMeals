@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         paddingBottom: 5,
+        color: "#433131"
     },
 
     details: {

@@ -28,10 +28,11 @@ const styles = StyleSheet.create({
     },
 
     sectionHeader: {
+        color: 'white',
         paddingLeft: 10,
         fontSize: 30,
         fontWeight: 'bold',
-        backgroundColor: 'white',
+        backgroundColor: '#433131',
         paddingVertical: 5,
         shadowOpacity: .3,
         shadowRadius: 5,

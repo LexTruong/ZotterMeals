@@ -128,14 +128,13 @@ export default function progress() {
             <Header title="Progress"></Header>
 
             <View>
-                <Text>Hello {user?.email}</Text>
                 <Button title="Sign out" onPress={() => auth.signOut()} />
             </View>
 
             <View style={styles.progressBars}>
                 <CircularProgress
                     value={curCalories}
-                    radius={90}
+                    radius={100}
                     duration={3500}
                     progressValueColor={'black'}
                     maxValue={2000}
@@ -147,7 +146,7 @@ export default function progress() {
                     activeStrokeSecondaryColor={'#451400'}
                 />
 
-                <CircularProgress
+                {/* <CircularProgress
                     value={curProtein}
                     radius={90}
                     duration={3500}
@@ -159,7 +158,7 @@ export default function progress() {
                     titleStyle={{fontWeight: 'bold'}}
                     activeStrokeColor={'#A81612'}
                     activeStrokeSecondaryColor={'#451400'}
-                />
+                /> */}
             </View>
 
             <View style={styles.titleIcons}>
@@ -198,6 +197,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginLeft: 15,
+        color: "#433131"
     },
 
     progressBars: {
