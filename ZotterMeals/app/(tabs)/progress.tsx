@@ -15,6 +15,11 @@ import { TotalInfoProps } from '@/components/TotalProgressModal.js';
 import { useIsFocused } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 
+export interface MealTypeListProps {
+    title: string,
+    data: MealCardInfo[]
+}
+
 export default function progress() {
     const calorieGoal = '/2000 Calories';
     const proteinGoal = '/150g Protein'
@@ -26,7 +31,7 @@ export default function progress() {
 
     const [curCalories, setCurCalories] = useState(0)
     const [curProtein, setCurProtein] = useState(0)
-    const [curMealData, setCurMealData] = useState<MealCardInfo[]>([])
+    const [curMealData, setCurMealData] = useState<MealTypeListProps[]>([])
     const [totalInfo, setTotalInfo] = useState<TotalInfoProps>(
         {
         totalCalories: 0,
@@ -56,7 +61,7 @@ export default function progress() {
             const docSnap = await getDoc(docRef)        
 
             if (docSnap.exists()) {
-                const currentMeals: MealCardInfo[] = docSnap.data().currentDay
+                const currentMeals: MealTypeListProps[] = docSnap.data().currentDay
 
                 setCurMealData(currentMeals)
 
@@ -75,22 +80,24 @@ export default function progress() {
                 let totalVitaminA = 0
                 let totalVitaminC = 0
                 let totalCalcium = 0
-        
-                currentMeals.forEach(item => {
-                    totalCalories += parseInt(item.nutrition.calories ?? '0')
-                    totalProtein += parseInt(item.nutrition.protein ?? '0')
-                    totalFat += parseInt(item.nutrition.totalFat ?? '0')
-                    totalTransFat += parseInt(item.nutrition.transFat ?? '0')
-                    totalSaturatedFat += parseInt(item.nutrition.saturatedFat ?? '0')
-                    totalCholesterol += parseInt(item.nutrition.cholesterol ?? '0')
-                    totalSodium += parseInt(item.nutrition.sodium ?? '0')
-                    totalCarbohydrates += parseInt(item.nutrition.totalCarbohydrates ?? '0')
-                    totalFiber += parseInt(item.nutrition.dietaryFiber ?? '0')
-                    totalSugars += parseInt(item.nutrition.sugars ?? '0')
-                    totalIron += parseInt(item.nutrition.iron ?? '0')
-                    totalVitaminA += parseInt(item.nutrition.vitaminA ?? '0')
-                    totalVitaminC += parseInt(item.nutrition.vitaminC ?? '0')
-                    totalCalcium += parseInt(item.nutrition.calcium ?? '0')
+                
+                currentMeals.forEach(mealTypeList => {
+                    mealTypeList.data.forEach(item => {
+                        totalCalories += parseInt(item.nutrition.calories ?? '0')
+                        totalProtein += parseInt(item.nutrition.protein ?? '0')
+                        totalFat += parseInt(item.nutrition.totalFat ?? '0')
+                        totalTransFat += parseInt(item.nutrition.transFat ?? '0')
+                        totalSaturatedFat += parseInt(item.nutrition.saturatedFat ?? '0')
+                        totalCholesterol += parseInt(item.nutrition.cholesterol ?? '0')
+                        totalSodium += parseInt(item.nutrition.sodium ?? '0')
+                        totalCarbohydrates += parseInt(item.nutrition.totalCarbohydrates ?? '0')
+                        totalFiber += parseInt(item.nutrition.dietaryFiber ?? '0')
+                        totalSugars += parseInt(item.nutrition.sugars ?? '0')
+                        totalIron += parseInt(item.nutrition.iron ?? '0')
+                        totalVitaminA += parseInt(item.nutrition.vitaminA ?? '0')
+                        totalVitaminC += parseInt(item.nutrition.vitaminC ?? '0')
+                        totalCalcium += parseInt(item.nutrition.calcium ?? '0')
+                    })
                 })
 
                 setTotalInfo({
@@ -194,10 +201,10 @@ const styles = StyleSheet.create({
     },
 
     myMeals: {
-        fontSize: 30,
+        fontSize: 40,
         fontWeight: 'bold',
-        marginLeft: 15,
-        color: "#433131"
+        color: "#433131",
+        paddingBottom: 5
     },
 
     progressBars: {
@@ -209,13 +216,15 @@ const styles = StyleSheet.create({
 
     titleIcons: {
         flexDirection: 'row',
+        borderBottomWidth: 2,
+        marginHorizontal: 15,
+        alignItems: 'center'
     },
 
     icons: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         gap: 10,
-        marginRight: 15,
         marginLeft: 'auto'
     },
 

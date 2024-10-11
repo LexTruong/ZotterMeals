@@ -6,7 +6,6 @@ import SignUpModal from '@/components/SignUpModal';
 
 
 export default function HomeScreen() {
-  const [modalVisible, setModalVisible] = useState(false)
   const [signUpModalVisible, setSignUpModalVisible] = useState(false)
 
 
@@ -22,21 +21,17 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.text}>
         <Text style={styles.title}>ZotterMeals</Text>
-        <Text style={styles.subtitle}>Simple Calorie Tracking for Anteaters</Text>
       </View>
-      <Image style={styles.logo} source={require('../assets/images/eat.png')}></Image>
-      <View style={styles.buttons}>
-        <LoginModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
-        <TouchableOpacity style={styles.button} onPress={() => setModalVisible(!modalVisible)}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-
+        <LoginModal></LoginModal>
+        <Image style={styles.logo} source={require('../assets/images/eat.png')}></Image>
         <SignUpModal modalVisible={signUpModalVisible} setModalVisible={setSignUpModalVisible}/>
-        <TouchableOpacity style={styles.button}  onPress={() => setSignUpModalVisible(!signUpModalVisible)}>
-          <Text style={styles.buttonText}>Sign Up</Text>
+        <View style={styles.spaceBetween}>
+        <Text style={styles.buttonText}>Don't have an account?</Text>
+        <TouchableOpacity onPress={() => setSignUpModalVisible(!signUpModalVisible)}>
+          <Text style={styles.signUpText}>  Register here</Text>
           </TouchableOpacity>
+          </View>
       </View>
-    </View>
   );
 }
 
@@ -71,7 +66,7 @@ const styles = StyleSheet.create({
 
   logo: {
     marginTop: 50,
-    marginBottom: 50,
+    marginBottom: 20,
     width: 200,
     height: 200,
     overflow: 'visible'
@@ -81,23 +76,21 @@ const styles = StyleSheet.create({
     gap: 15,
   },
 
-  button: {
-    backgroundColor: "#A81612",
-    borderRadius: 30,
-    width: 250,
-    height: 60,
-    justifyContent: "center",
-    shadowOpacity: .5,
-    shadowRadius: 10,
-    shadowOffset: {
-      width: 0,
-      height: 5
-    }
-  },
-
   buttonText: {
     color: 'white',
     textAlign: 'center',
     fontSize: 20,
   }, 
+
+  signUpText: {
+    color: '#A81612',
+    textAlign: 'center',
+    fontSize: 20,
+    textDecorationLine: 'underline',
+  },
+
+  spaceBetween: {
+    marginTop: 30,
+    flexDirection: 'row',
+  },
 });

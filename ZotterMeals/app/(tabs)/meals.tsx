@@ -12,7 +12,6 @@ export default function meals() {
     const [diningHall, setDiningHall] = useState(false)
     const [diningModalVisible, setDiningModalVisible] = useState(false)
     const [mealTypeModalVisible, setMealTypeModalVisible] = useState(false)
-    const [curMeal, setCurMeal] = useState('')
     const [mealType, setMealType] = useState('')
     const ref = useRef<PagerView | null>(null)
     
@@ -55,7 +54,6 @@ export default function meals() {
             }
             
             setSections(newSections)
-            setCurMeal(data.currentMeal)
             setMealType(data.currentMeal)
             console.log("changed meal")
         })
@@ -148,7 +146,7 @@ export default function meals() {
                 </View>
             </PagerView>
             
-            <MealList sections={sections}/>
+            <MealList mealType={mealType} sections={sections}/>
         </View>
     )
 }

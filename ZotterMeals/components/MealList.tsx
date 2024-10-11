@@ -2,14 +2,19 @@ import { StyleSheet, View, SectionList, Text, SectionListData, SectionBase } fro
 import MealCard, { MealCardInfo } from './MealCard'
 import { useEffect, useState } from 'react'
 
-export default function MealList({sections} : {sections: SectionListData<MealCardInfo>[]}) {
+interface Props {
+    mealType: string,
+    sections: SectionListData<MealCardInfo>[]
+}
+
+export default function MealList({mealType, sections} : Props) {
 
     return (
         <View style={styles.container}>
             {sections ?
             <SectionList
                 sections={sections}
-                renderItem={({item}: {item: MealCardInfo}) => <MealCard info={item} />}
+                renderItem={({item}: {item: MealCardInfo}) => <MealCard mealType={mealType} info={item} />}
                 renderSectionHeader={({section: {title}}) => (
                     <Text style={styles.sectionHeader}>{title}</Text>
                 )}

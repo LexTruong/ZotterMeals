@@ -4,12 +4,12 @@ import { useState } from 'react';
 import {FIREBASE_AUTH} from '../firebaseConfig.js';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
-interface Props {
-    modalVisible: boolean,
-    setModalVisible: Function
-}
+// interface Props {
+//     modalVisible: boolean,
+//     setModalVisible: Function
+// }
 
-export default function LoginModal({modalVisible, setModalVisible}: Props) {
+export default function LoginModal() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false);
@@ -20,7 +20,6 @@ export default function LoginModal({modalVisible, setModalVisible}: Props) {
         try {
             const response = await signInWithEmailAndPassword(auth, email, password)
             console.log(response)
-            setModalVisible(false)
         } catch (error: any) {
             alert('Sign in failed: ' + error.message)
         } finally {
@@ -30,24 +29,9 @@ export default function LoginModal({modalVisible, setModalVisible}: Props) {
 
     return (
         <View>
-            <Modal
-             animationType="slide"
-             transparent={true}
-             visible={modalVisible}
-             onRequestClose={() => {
-                setModalVisible(!modalVisible)
-             }}>
                 <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Pressable
-                        onPress={() => setModalVisible(!modalVisible)}>
-                            <Ionicons style={styles.closeButton} name="close-circle-outline"></Ionicons>
-                        </Pressable>
-                        
-                        
-                        <View style={styles.modalContent}>
-                            <Text style={styles.modalTitle}>Login</Text>    
-
+                    <View style={styles.modalView}>                    
+                        <View>
                             <View style={styles.inputs}>
                                 <TextInput 
                                 placeholder="Email"
@@ -67,28 +51,23 @@ export default function LoginModal({modalVisible, setModalVisible}: Props) {
                             </View>
                             { loading ? <ActivityIndicator size="large" color='#A81612'/>
                             : <TouchableOpacity style={styles.button} onPress={() => signIn()}>
-                                <Text style={styles.buttonText}>Go!</Text>
+                                <Text style={styles.buttonText}>Log in</Text>
                             </TouchableOpacity>
                             }
                         </View>
                     </View>
                 </View>
-            </Modal>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     centeredView: {
-        justifyContent: 'center',
         alignItems: 'center',
-        flex: 1,
     },
 
     modalView: {
-        backgroundColor: 'white',
-        height: '35%',
-        width: '85%',
+        width: '100%',
         borderRadius: 20,
         shadowOpacity: .5,
         shadowRadius: 5,
@@ -97,21 +76,6 @@ const styles = StyleSheet.create({
             height: 5
         },
         padding: 10,
-    },
-
-    modalContent: {
-        paddingHorizontal: 5
-    },
-
-    closeButton: {
-        textAlign: 'right',
-        fontSize: 30,
-        padding: 5,
-    },
-
-    modalTitle: {
-        fontSize: 30,
-        fontWeight: 'bold'
     },
 
     inputs: {
@@ -123,18 +87,20 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        fontSize: 20,
+        color: 'white',
+        fontSize: 25,
         paddingBottom: 5,
         borderBottomWidth: 1,
+        borderBottomColor: 'white'
     },
 
 
 
     button: {
         backgroundColor: "#A81612",
-        borderRadius: 30,
-        width: 250,
-        height: 60,
+        borderRadius: 10,
+        width: 300,
+        height: 50,
         justifyContent: "center",
         shadowOpacity: .5,
         shadowRadius: 10,

@@ -33,7 +33,20 @@ export default function SignUpModal({modalVisible, setModalVisible}: Props) {
                 if (currentUserId) {
                     const docRef = await setDoc(doc(FIRESTORE_DB, "users", currentUserId), {
                         goals: {},
-                        currentDay: [],
+                        currentDay: [
+                            {
+                                title: "Breakfast",
+                                data: []
+                            },
+                            {
+                                title: "Lunch",
+                                data: []
+                            },
+                            {
+                                title: "Dinner",
+                                data: []
+                            },
+                        ],
                         pastDates: []
                     })
                 }
@@ -68,7 +81,7 @@ export default function SignUpModal({modalVisible, setModalVisible}: Props) {
                         
                         
                         <View style={styles.modalContent}>
-                            <Text style={styles.modalTitle}>SignUp</Text>    
+                            <Text style={styles.modalTitle}>Register</Text>    
 
                             <View style={styles.inputs}>
                                 <TextInput 

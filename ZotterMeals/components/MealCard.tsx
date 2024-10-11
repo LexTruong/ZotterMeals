@@ -35,7 +35,12 @@ export interface MealCardInfo {
     }
 }
 
-function MealCard({info}: {info: MealCardInfo}) {
+interface Props {
+    mealType: string,
+    info: MealCardInfo
+}
+
+function MealCard({mealType, info}: Props) {
     const [modalVisible, setModalVisible] = useState(false)
 
     const currentUserId = FIREBASE_AUTH.currentUser?.uid
@@ -50,7 +55,16 @@ function MealCard({info}: {info: MealCardInfo}) {
                 
                 if (docSnap.exists()) {
                     const currentMeals = docSnap.data().currentDay
-                    currentMeals.push(info)
+
+                    console.log(mealType)
+
+                    if (mealType == "breakfast") {
+                        currentMeals[0].data.push(info)
+                    } else if (mealType == "lunch") {
+                        currentMeals[1].data.push(info)
+                    } else if (mealType == "dinner") {
+                        currentMeals[2].data.push(info)
+                    }
                     
                     await updateDoc(docRef, {
                         currentDay: currentMeals
@@ -61,7 +75,7 @@ function MealCard({info}: {info: MealCardInfo}) {
                     console.log("No such document!")
                 }
 
-                console.log("Added meal");
+                console.log("Added " + info.name);
               } catch (e) {
                 console.error("Error adding document: ", e);
               }

@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '@/firebaseConfig';
 import { arrayRemove, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useRouter } from 'expo-router';
+import { MealTypeListProps } from '@/app/(tabs)/progress';
 
 interface Props {
     modalVisible: boolean,
@@ -22,9 +23,14 @@ export default function ProgressMealInfoModal({modalVisible, setModalVisible, in
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
-                const currentMeals: MealCardInfo[] = docSnap.data().currentDay
-                let index = currentMeals.findIndex(meal => meal.name == info.name)
-                currentMeals.splice(index, 1)
+                const currentMeals: MealTypeListProps[] = docSnap.data().currentDay
+
+                for (let i=0; i < currentMeals.length; i++) {
+                    let index = currentMeals[i].data.findIndex(meal => meal.name == info.name)
+                    if (index != -1) {
+                        currentMeals[i].data.splice(index, 1)
+                    }
+                }
 
                 await updateDoc(docRef, {
                     currentDay: currentMeals
