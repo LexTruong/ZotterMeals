@@ -32,7 +32,9 @@ export default function SignUpModal({modalVisible, setModalVisible}: Props) {
                 const currentUserId = FIREBASE_AUTH.currentUser?.uid
                 if (currentUserId) {
                     const docRef = await setDoc(doc(FIRESTORE_DB, "users", currentUserId), {
-                        goals: {},
+                        goals: {
+                            calories: 2000
+                        },
                         currentDay: [
                             {
                                 title: "Breakfast",

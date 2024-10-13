@@ -14,6 +14,7 @@ import { MealCardInfo } from '@/components/MealCard.js';
 import { TotalInfoProps } from '@/components/TotalProgressModal.js';
 import { useIsFocused } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
+import CalorieGoalModal from '@/components/CalorieGoalModal';
 
 export interface MealTypeListProps {
     title: string,
@@ -21,13 +22,15 @@ export interface MealTypeListProps {
 }
 
 export default function progress() {
-    const calorieGoal = '/2000 Calories';
     const proteinGoal = '/150g Protein'
     const [addModalVisible, setAddModalVisible] = useState(false)
     const [totalModalVisible, setTotalModalVisible] = useState(false)
     const [calendarModal, setCalendarModal] = useState(false)
+    const [calorieModalVisible, setCalorieModalVisible] = useState(false)
     const auth = FIREBASE_AUTH;
     const user = auth.currentUser;
+    const [calorieGoal, setCalorieGoal] = useState('2000')
+    const [caloriePercentage, setCaloriePercentage] = useState(1)
 
     const [curCalories, setCurCalories] = useState(0)
     const [curProtein, setCurProtein] = useState(0)
@@ -120,6 +123,11 @@ export default function progress() {
                 setCurCalories(totalCalories)
                 setCurProtein(totalProtein)
 
+                // get calorie goal
+                let curCalorieGoal = docSnap.data().goals.calories
+                setCalorieGoal(curCalorieGoal)
+                console.log(curCalorieGoal)
+
             } else {
                 console.log("No such document!")
             }
@@ -139,20 +147,28 @@ export default function progress() {
             </View>
 
             <View style={styles.progressBars}>
-                <CircularProgress
-                    value={curCalories}
-                    radius={100}
-                    duration={3500}
-                    progressValueColor={'black'}
-                    maxValue={2000}
-                    title={''}
-                    subtitle={calorieGoal}
-                    titleColor={'black'}
-                    titleStyle={{fontWeight: 'bold'}}
-                    activeStrokeColor={'#A81612'}
-                    activeStrokeSecondaryColor={'#451400'}
-                />
-
+                <CalorieGoalModal
+                 modalVisible={calorieModalVisible}
+                 setModalVisible={setCalorieModalVisible}
+                 calorieGoal={calorieGoal}
+                 setCalorieGoal={setCalorieGoal}
+                 updateData={fetchData}/>
+                <Pressable
+                onPress={() => setCalorieModalVisible(!calorieModalVisible)}>
+                    <CircularProgress
+                        key={calorieGoal}
+                        value={curCalories}
+                        radius={100}
+                        duration={3500}
+                        progressValueColor={'black'}
+                        maxValue={parseInt(calorieGoal)}
+                        subtitle={'/' + calorieGoal + ' calories'}
+                        titleColor={'black'}
+                        titleStyle={{fontWeight: 'bold'}}
+                        activeStrokeColor={'#A81612'}
+                        activeStrokeSecondaryColor={'#451400'}
+                    />
+                </Pressable>
                 {/* <CircularProgress
                     value={curProtein}
                     radius={90}
@@ -204,7 +220,7 @@ const styles = StyleSheet.create({
         fontSize: 40,
         fontWeight: 'bold',
         color: "#433131",
-        paddingBottom: 5
+        paddingBottom: 5,
     },
 
     progressBars: {
@@ -218,7 +234,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderBottomWidth: 2,
         marginHorizontal: 15,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 10
     },
 
     icons: {
