@@ -188,7 +188,7 @@ export default function progress() {
                 <Text style={styles.myMeals}>My Meals</Text>
                 <View style={styles.icons}>
 
-                    <AddMealModal modalVisible={addModalVisible} setModalVisible={setAddModalVisible}/>
+                    <AddMealModal modalVisible={addModalVisible} setModalVisible={setAddModalVisible} updateData={fetchData}/>
                     <Pressable onPress={() => setAddModalVisible(!addModalVisible)}>
                         <Ionicons style={[styles.icon, styles.add]} name="add-circle-outline"></Ionicons>
                     </Pressable>

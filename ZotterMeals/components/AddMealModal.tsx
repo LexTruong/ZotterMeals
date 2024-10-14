@@ -1,14 +1,21 @@
 import { Alert, TextInput, StyleSheet, View, Text, Modal, Pressable } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {useState} from 'react'
+import {collection, addDoc, setDoc, doc, updateDoc, arrayUnion, getDoc} from "firebase/firestore"
+import {FIREBASE_AUTH, FIRESTORE_DB } from '../firebaseConfig.js'
+import * as Haptics from 'expo-haptics';
+import { Dropdown } from 'react-native-element-dropdown';
+import { MealCardInfo } from './MealCard.js';
 
 interface Props {
     modalVisible: boolean,
-    setModalVisible: Function
+    setModalVisible: Function,
+    updateData: Function
 }
 
-export default function AddMealModal({modalVisible, setModalVisible}: Props) {
+export default function AddMealModal({modalVisible, setModalVisible, updateData}: Props) {
     const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
     const [calories, setCalories] = useState('');
     const [caloriesFat, setCaloriesFat] = useState('')
     const [cholesterol, setCholestorol] = useState('')
@@ -25,6 +32,97 @@ export default function AddMealModal({modalVisible, setModalVisible}: Props) {
     const [transFat, setTransFat] = useState('')
     const [vitaminA, setVitaminA] = useState('')
     const [vitaminC, setVitaminC] = useState('')
+    
+    const [dropValue, setDropValue] = useState<string | null>(null)
+    const [isFocus, setIsFocus] = useState(false)
+    const currentUserId = FIREBASE_AUTH.currentUser?.uid
+
+    const addMeal = async () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+        if (name && calories && caloriesFat && cholesterol && fiber && iron && protein && saturatedFat && servingSize 
+            && servingUnit && sodium && sugars && carbs && totalFat && transFat && vitaminA && vitaminC) {
+            
+            let info = {
+                name,
+                description: '',
+                nutrition: {
+                    calories,
+                    protein,
+                    caloriesFromFat : caloriesFat,
+                    totalFat,
+                    transFat,
+                    cholesterol,
+                    sodium,
+                    totalCarbohydrates : carbs,
+                    dietaryFiber : fiber,
+                    sugars,
+                    iron,
+                    vitaminA,
+                    vitaminC,
+                    saturatedFat,
+                    servingSize,
+                    servingUnit
+                }
+            }
+                info.name = name;
+                info.nutrition.calories = calories;
+                info.nutrition.caloriesFromFat = caloriesFat;
+                info.nutrition.cholesterol = cholesterol;
+                info.nutrition.dietaryFiber = fiber;
+                info.nutrition.iron = iron;
+                info.nutrition.protein = protein;
+                info.nutrition.saturatedFat = saturatedFat;
+                info.nutrition.servingSize = servingSize;
+                info.nutrition.servingUnit = servingUnit;
+                info.nutrition.sodium = sodium;
+                info.nutrition.sugars = sugars;
+                info.nutrition.totalCarbohydrates = carbs;
+                info.nutrition.totalFat = totalFat;
+                info.nutrition.transFat = transFat;
+                info.nutrition.vitaminA = vitaminA;
+                info.nutrition.vitaminC = vitaminC;
+                info.description = '';
+
+            if (currentUserId) {
+                try {
+                    const docRef = doc(FIRESTORE_DB, "users", currentUserId);
+                    const docSnap = await getDoc(docRef);
+                    
+                    if (docSnap.exists()) {
+                        const currentMeals = docSnap.data().currentDay
+
+                        console.log(dropValue)
+                        console.log(info)
+                        if (dropValue == "Breakfast") {
+                            currentMeals[0].data.push(info)
+                        } else if (dropValue == "Lunch") {
+                            currentMeals[1].data.push(info)
+                        } else if (dropValue == "Dinner") {
+                            currentMeals[2].data.push(info)
+                        }
+                        
+                        await updateDoc(docRef, {
+                            currentDay: currentMeals
+                        })
+
+                        alert("Added " + info.name)
+                    } else {
+                        console.log("No such document!")
+                    }
+
+                    console.log("Added " + info.name);
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+            }
+            updateData()
+            setModalVisible(false)
+        }
+        else {
+            console.log("Fill out all info");
+            alert("Please fill out all information!");
+        }
+    }
 
     const addUnit = (num: string, setUnit: Function) => {
         if(num && !num.includes('g')) {
@@ -32,9 +130,24 @@ export default function AddMealModal({modalVisible, setModalVisible}: Props) {
         }
     }
 
-    const addMeal = () => {
-        console.log("HELLO")
-    }
+    const mealTypes = [
+        {label: 'Breakfast', value:'Breakfast'},
+        {label: 'Lunch', value:'Lunch'},
+        {label: 'Dinner', value:'Dinner'},
+
+    ]
+
+    const renderLabel = () => {
+        if (dropValue || isFocus) {
+          return (
+            <Text style={[styles.dropLabel, isFocus && { color: 'blue' }]}>
+              Dropdown label
+            </Text>
+          );
+        }
+        return null;
+      };
+
 
     return (
         <View>
@@ -60,14 +173,36 @@ export default function AddMealModal({modalVisible, setModalVisible}: Props) {
                                 value={name}
                                 style={styles.nameInput}
                                 />
+                            <View>
+                            {/* {renderLabel()} */}
+                            <Dropdown
+                                style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                                //placeholderStyle={styles.placeholderStyle}
+                                //selectedTextStyle={styles.selectedTextStyle}
+                                //inputSearchStyle={styles.inputSearchStyle}
+                                //iconStyle={styles.iconStyle}
+                                data={mealTypes}
+                                maxHeight={250}
+                                labelField="label"
+                                valueField="value"
+                                placeholder={!isFocus ? 'Select Meal type' : '...'}
+                                value={dropValue}
+                                onFocus={() => setIsFocus(true)}
+                                onBlur={() => setIsFocus(false)}
+                                onChange={item => {
+                                    setDropValue(item.value);
+                                    setIsFocus(false);
+                                }}
 
+                                />
+                            </View>
                             <View style={styles.spaceBetween}>
                                 <Text style={styles.details}>Calories</Text>
                                 <TextInput style={styles.textInput}
                                     maxLength={3}
                                     keyboardType={'numeric'}
                                     value={calories}
-                                    onChangeText={setCalories}
+                                    onChangeText={setCalories} 
                                     onEndEditing={() => addUnit(calories, setCalories)}
                                     returnKeyType={'done'}
                                 />
@@ -329,5 +464,16 @@ const styles = StyleSheet.create({
     addIcon: {
         fontSize: 40,
         color: 'white',
+    },
+
+    dropLabel: {
+
+    },
+    dropdown: {
+        height: 35,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
     },
 })
