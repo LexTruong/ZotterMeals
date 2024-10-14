@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     sectionHeader: {
         paddingLeft: 15,
         fontSize: 30,
-        color: "#433131",
+        color: "#A81612",
         fontWeight: "bold",
         backgroundColor: 'white'
     }

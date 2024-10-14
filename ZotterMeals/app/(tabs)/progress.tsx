@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     myMeals: {
         fontSize: 40,
         fontWeight: 'bold',
-        color: "#433131",
+        color: "#A81612",
         paddingBottom: 5,
     },
 
