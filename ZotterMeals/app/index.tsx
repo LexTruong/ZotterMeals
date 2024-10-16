@@ -4,18 +4,8 @@ import { useState } from 'react';
 import LoginModal from '@/components/LoginModal';
 import SignUpModal from '@/components/SignUpModal';
 
-
 export default function HomeScreen() {
   const [signUpModalVisible, setSignUpModalVisible] = useState(false)
-
-
-  const something = () => {
-    console.log("21")
-  }
-
-  const something2 = () => {
-    console.log("Yeah")
-  }
 
   return (
     <View style={styles.container}>
@@ -26,11 +16,11 @@ export default function HomeScreen() {
         <Image style={styles.logo} source={require('../assets/images/eat.png')}></Image>
         <SignUpModal modalVisible={signUpModalVisible} setModalVisible={setSignUpModalVisible}/>
         <View style={styles.spaceBetween}>
-        <Text style={styles.buttonText}>Don't have an account?</Text>
-        <TouchableOpacity onPress={() => setSignUpModalVisible(!signUpModalVisible)}>
-          <Text style={styles.signUpText}>  Register here</Text>
+          <Text style={styles.buttonText}>Don't have an account?</Text>
+          <TouchableOpacity onPress={() => setSignUpModalVisible(!signUpModalVisible)}>
+            <Text style={styles.signUpText}>  Register here</Text>
           </TouchableOpacity>
-          </View>
+        </View>
       </View>
   );
 }

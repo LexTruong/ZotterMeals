@@ -39,8 +39,7 @@ export default function AddMealModal({modalVisible, setModalVisible, updateData}
 
     const addMeal = async () => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
-        if (name && calories && caloriesFat && cholesterol && fiber && iron && protein && saturatedFat && servingSize 
-            && servingUnit && sodium && sugars && carbs && totalFat && transFat && vitaminA && vitaminC) {
+        if (name && calories && dropValue) {
             
             let info = {
                 name,
@@ -119,14 +118,13 @@ export default function AddMealModal({modalVisible, setModalVisible, updateData}
             setModalVisible(false)
         }
         else {
-            console.log("Fill out all info");
-            alert("Please fill out all information!");
+            alert("Please add a name, meal type, and calories!");
         }
     }
 
     const addUnit = (num: string, setUnit: Function) => {
         if(num && !num.includes('g')) {
-            setUnit(num + 'g')
+            setUnit(num)
         }
     }
 
@@ -148,6 +146,28 @@ export default function AddMealModal({modalVisible, setModalVisible, updateData}
         return null;
       };
 
+    const handleModalClose = () => {
+        setModalVisible(!modalVisible);
+        setName('');
+        setDescription('');
+        setCalories('');
+        setCaloriesFat('');
+        setCholestorol('');
+        setFiber('');
+        setIron('');
+        setProtein('');
+        setSaturatedFat('');
+        setServingSize('');
+        setServingUnit('');
+        setSodium('');
+        setSugars('');
+        setCarbs('');
+        setTotalFat('');
+        setTransFat('');
+        setVitaminA('');
+        setVitaminC('');
+    };
+
 
     return (
         <View>
@@ -161,17 +181,18 @@ export default function AddMealModal({modalVisible, setModalVisible, updateData}
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Pressable
-                        onPress={() => setModalVisible(!modalVisible)}>
+                        onPress={handleModalClose}>
                             <Ionicons style={styles.closeButton} name="close-circle-outline"></Ionicons>
                         </Pressable>
                         
                         <View style={styles.modalContent}>
                             <Text style={styles.modalTitle}>Add Meal</Text>
                             <TextInput 
-                                placeholder="meal name"
+                                placeholder="Meal name"
                                 onChangeText={setName}
                                 value={name}
                                 style={styles.nameInput}
+                                placeholderTextColor={'#817f7f'}
                                 />
                             <View>
                             {/* {renderLabel()} */}
@@ -198,14 +219,29 @@ export default function AddMealModal({modalVisible, setModalVisible, updateData}
                             </View>
                             <View style={styles.spaceBetween}>
                                 <Text style={styles.details}>Calories</Text>
+                                <Text>*</Text>
                                 <TextInput style={styles.textInput}
-                                    maxLength={3}
+                                    maxLength={4}
                                     keyboardType={'numeric'}
                                     value={calories}
                                     onChangeText={setCalories} 
                                     onEndEditing={() => addUnit(calories, setCalories)}
                                     returnKeyType={'done'}
                                 />
+                            </View>
+                            <View style={styles.spaceBetween}>
+                                <Text style={styles.details}>Protein</Text>
+                                <View style={styles.flexRow}>
+                                    <TextInput style={styles.textInput}
+                                        maxLength={3}
+                                        keyboardType={'numeric'}
+                                        value={protein}
+                                        onChangeText={setProtein}
+                                        onEndEditing={() => addUnit(protein, setProtein)}
+                                        returnKeyType={'done'}
+                                    />
+                                    <Text>g</Text>
+                                </View>
                             </View>
                             <View style={styles.spaceBetween}>
                                 <Text style={styles.details}>Calories From Fat</Text>
@@ -251,17 +287,7 @@ export default function AddMealModal({modalVisible, setModalVisible, updateData}
                                     returnKeyType={'done'}
                                 />
                             </View>
-                            <View style={styles.spaceBetween}>
-                                <Text style={styles.details}>Protein</Text>
-                                <TextInput style={styles.textInput}
-                                    maxLength={3}
-                                    keyboardType={'numeric'}
-                                    value={protein}
-                                    onChangeText={setProtein}
-                                    onEndEditing={() => addUnit(protein, setProtein)}
-                                    returnKeyType={'done'}
-                                />
-                            </View>
+                            
                             <View style={styles.spaceBetween}>
                                 <Text style={styles.details}>Saturated Fat</Text>
                                 <TextInput style={styles.textInput}
@@ -273,28 +299,7 @@ export default function AddMealModal({modalVisible, setModalVisible, updateData}
                                     returnKeyType={'done'}
                                 />
                             </View>
-                            <View style={styles.spaceBetween}>
-                                <Text style={styles.details}>Serving Size</Text>
-                                <TextInput style={styles.textInput}
-                                    maxLength={3}
-                                    keyboardType={'numeric'}
-                                    value={servingSize}
-                                    onChangeText={setServingSize}
-                                    onEndEditing={() => addUnit(servingSize, setServingSize)}
-                                    returnKeyType={'done'}
-                                />
-                            </View>
-                            <View style={styles.spaceBetween}>
-                                <Text style={styles.details}>Serving Unit</Text>
-                                <TextInput style={styles.textInput}
-                                    maxLength={3}
-                                    keyboardType={'numeric'}
-                                    value={servingUnit}
-                                    onChangeText={setServingUnit}
-                                    onEndEditing={() => addUnit(servingUnit, setServingUnit)}
-                                    returnKeyType={'done'}
-                                />
-                            </View>
+                            
                             <View style={styles.spaceBetween}>
                                 <Text style={styles.details}>Sodium</Text>
                                 <TextInput style={styles.textInput}
@@ -394,7 +399,7 @@ const styles = StyleSheet.create({
     textInput: {
         borderBottomColor: 'black',
         borderBottomWidth: 1,
-        width: 40
+        width: 35
     },
 
     nameInput: {
@@ -469,6 +474,7 @@ const styles = StyleSheet.create({
     dropLabel: {
 
     },
+
     dropdown: {
         height: 35,
         borderColor: 'gray',
@@ -476,4 +482,10 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 8,
     },
+
+    flexRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-end'
+    }
 })

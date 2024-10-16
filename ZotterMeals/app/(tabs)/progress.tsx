@@ -126,7 +126,6 @@ export default function progress() {
                 // get calorie goal
                 let curCalorieGoal = docSnap.data().goals.calories
                 setCalorieGoal(curCalorieGoal)
-                console.log(curCalorieGoal)
 
             } else {
                 console.log("No such document!")

@@ -22,3 +22,8 @@ expo-env.d.ts
 
 GoogleService-Info.plist
 firebaseConfig.js
+service-account-file.json
+firebase.json
+firestore.indexes.json
+firestore.rules
+.firebaserc
